@@ -755,7 +755,7 @@
         ```
         <body>
         <script>
-        $('body').load('/TavernHelper/script/dist/1.魔物娘堡垒2.0/界面/状态栏/index.html')
+        $('body').load('https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@main/dist/1.魔物娘堡垒2.0/界面/状态栏/index.html')
         </script>
         </body>
         ```
@@ -781,7 +781,7 @@
         类型: 脚本
         内容: |-
           import { registerMvuSchema } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/mvu_zod.js';
-          import { Schema } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource@main/dist/1.魔物娘堡垒2.0/schema.js';
+          import { Schema } from 'https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@main/dist/1.魔物娘堡垒2.0/schema.js';
 
           $(() => {
             registerMvuSchema(Schema);
