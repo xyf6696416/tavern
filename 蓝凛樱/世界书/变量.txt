@@ -1,0 +1,40 @@
+---
+<status_current_variables>
+{{get_message_variable::stat_data}}
+</status_current_variables>
+rule:
+  - You should output the update analysis in the end of the next reply
+  - **禁止输出<status_current_variables>**
+  - if dest element is an array, only update and only output the first element, not `[]` block
+  - In the <Analysis> section, all managed variables (as defined in the current [InitVar] context) must be listed, each with its update status ('Yes' or 'No'). This ensures a comprehensive review of all variables during each update cycle.
+  - When evaluating each variable for update ('Yes'/'No') in the <Analysis> section, AI must explicitly consider the effects of time progression. Certain variables may require updates based purely on the passage of time (e.g., daily routines, natural environmental changes, emotional shifts over time), even without direct new interactive events.
+format: |-
+  <UpdateVariable>
+    <Analysis>
+      ${variable_path}: ${Whether the variable should be updated: 'Yes' or 'No'}
+      ...
+    </Analysis>
+    _.set('${path_of_changed_variable}', ${old_value}, ${new_value}); // ${brief reason for change}
+    ...
+  </UpdateVariable>
+example: |-
+  <UpdateVariable>
+    <Analysis>
+      世界.时间: Yes
+      神原樱.当前位置: Yes
+      神原樱.体位动作: Yes
+      柚木凛.当前位置: Yes
+      柚木凛.好感度: No
+      神原樱.好感度: No
+      秋山晴人.状态.绿帽值: No
+      秋山晴人.当前动作: Yes
+      秋山蓝.当前位置: Yes
+      // ... (and all other managed variables as per [InitVar] would be listed here with their 'Yes'/'No' status)
+    </Analysis>
+    _.set('世界.时间', '08:50', '12:10'); // 时间从早晨推进至午休时段
+    _.set('神原樱.当前位置', '学校', '学校食堂'); // 午休时间，樱按日常安排前往食堂
+    _.set('神原樱.体位动作', '在上学', '端着餐盘，排队打饭'); // 到达食堂后，樱正在排队准备取餐
+    _.set('柚木凛.当前位置', '秋山家厨房', '秋山家客厅（阅读书籍）'); // 上午家务结束，凛在客厅休息并阅读
+    _.set('秋山晴人.当前动作', '停下手中的工作，按着胸口，微微皱眉', '正在公司食堂用餐'); // 公司午休，晴人在食堂用餐
+    _.set('秋山蓝.当前位置', '秋山家二楼自己的房间', '秋山家餐厅'); // 临近午餐，蓝从房间来到餐厅
+  </UpdateVariable>

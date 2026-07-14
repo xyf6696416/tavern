@@ -1,0 +1,72 @@
+<rule_角色入库规则>
+** 当你根据<rule_角色生成模板>生成了一个M-life女性角色后，必须将该角色的数据存入MVU变量的M-life_角色库.角色列表数组中。
+
+# 存储规则
+- 角色列表是一个JSON字符串数组，初始为 `[]`
+- 每次生成新角色时，使用 `insert` 操作将角色对象追加到数组末尾
+- **永远不要删除或移除已存入的角色**，只追加
+- 已有角色列表中如果已包含该角色（同名同职业），也要重新追加（视为历史版本/再次匹配）
+
+# 角色对象字段
+存入时每个角色对象包含以下字段（从角色生成模板中提取生成的内容）：
+
+```json
+{
+  "id": "角色唯一标识，如 char_001",
+  "nick": "角色昵称，M-life平台上显示的昵称",
+  "age": 年龄数字,
+  "job": "职业",
+  "level": "Lv1-Lv5",
+  "vip": "无/白银/黄金/黑金",
+  "purpose": "使用目的",
+  "registered": "注册时长",
+  "bodyType": "身材类型",
+  "height": "身高",
+  "faceStyle": "面容风格",
+  "features": "差异化特征",
+  "dailyStyle": "日常穿搭风格",
+  "dateStyle": "约会穿搭风格",
+  "lingerie": "内衣偏好",
+  "homeStyle": "居家风格",
+  "personality_drive": "核心驱动",
+  "personality_main": ["主色调1", "主色调2"],
+  "personality_contrast": "反差特质",
+  "chat_style": "打字习惯",
+  "chat_pace": "回复节奏",
+  "chat_initiative": "主动性",
+  "chat_drive": "开车风格",
+  "meet_first": "初见表现",
+  "meet_real": "真实vs照片",
+  "meet_pace": "进展节奏",
+  "bust": "罩杯",
+  "waist": "腰部描述",
+  "hip": "臀部描述",
+  "pubic": "私处外观",
+  "inner": "私处内部",
+  "sensitive": ["敏感点1", "敏感点2"],
+  "nsfw_drive": "NSFW核心驱动",
+  "nsfw_style": "亲密风格",
+  "nsfw_voice": "声音表现",
+  "nsfw_dirty_talk": "骚话类型",
+  "nsfw_likes": ["偏好1", "偏好2"],
+  "nsfw_limits": ["禁区1"],
+  "nsfw_orgasm": "高潮表现",
+  "created_at": "生成时间描述，如 '2025年9月15日'"
+}
+```
+
+# 变量操作格式
+每次追加角色时，用以下格式：
+<UpdateVariable>
+<JSONPatch>
+[
+  { "op": "insert", "path": "/M-life_角色库/角色列表/-", "value": "{JSON字符串}" }
+]
+</JSONPatch>
+</UpdateVariable>
+
+# 注意
+- value 必须是合法的JSON字符串，整个角色对象需要 JSON.stringify 后存入
+- 存入后，后续对话可以直接从变量中读取已生成的角色数据
+- 角色列表变量可通过 `{{format_message_variable::stat_data.M-life_角色库.角色列表}}` 读取
+</rule_角色入库规则>

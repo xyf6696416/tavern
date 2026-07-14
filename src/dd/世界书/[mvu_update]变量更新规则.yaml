@@ -1,0 +1,79 @@
+---
+变量更新规则:
+  系统:
+    日期, 时间, 位置:
+      check:
+        - update when this information changes in the narrative
+  M-life_经济:
+    M币余额, 累计充值:
+      check:
+        - update when user spends or earns M币
+        - update when user tops up
+        - delta -100 when user unboxes a character (100 M币/次)
+  M-life_用户:
+    用户等级, 经验值:
+      check:
+        - update when XP threshold reached
+        - level up: Lv1→Lv2(100XP) Lv2→Lv3(300XP) Lv3→Lv4(600XP) Lv4→Lv5(1000XP)
+    VIP类型, VIP到期日:
+      check:
+        - update when VIP purchased or expires
+    昵称, 年龄:
+      check:
+        - set on first use, rarely change
+  M-life_社交:
+    获赞总数:
+      check:
+        - +1 when any post of user gets a like
+    匹配成功数:
+      check:
+        - +1 when match is confirmed both-way
+    粉丝数, 关注数:
+      check:
+        - update when follow/unfollow happens
+    今日匹配次数:
+      check:
+        - +1 per match attempt
+        - reset to 0 when date changes
+    今日发帖次数:
+      check:
+        - +1 per post published
+        - reset to 0 when date changes
+    今日已签到:
+      check:
+        - set true after daily check-in
+        - reset false when date changes
+    连续签到天数:
+      check:
+        - +1 when date changes and 今日已签到=true
+        - reset to 0 if missed a day
+  M-life_私信:
+    未读私信数:
+      check:
+        - +1 when new DM received
+        - reset to 0 when user opens DM list
+    最近联系人:
+      check:
+        - update when user starts a new DM conversation
+        - keep max 5 names, comma-separated
+  M-life_黑金:
+    进行中招募数, 已报名招募数:
+      check:
+        - update when recruit is posted/cancelled/applied
+  M-life_角色库:
+    角色列表:
+      check:
+        - insert when AI generates a new character from 角色生成模板
+        - insert format: push a JSON object to the array
+        - never remove entries, only append
+  M-life_角色详情:
+    已开盒角色:
+      check:
+        - insert character ID when user pays 100 M币 to unbox
+        - check if ID already exists in array before insert (prevent double charge)
+        - never remove entries
+    角色详情缓存:
+      check:
+        - insert full character JSON snapshot at unbox time
+        - never overwrite existing cache entry for same character ID
+        - data shown to user should read from cache, not live character list

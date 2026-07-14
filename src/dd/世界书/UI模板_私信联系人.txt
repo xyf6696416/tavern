@@ -1,0 +1,83 @@
+<UI模板_私信联系人>
+** 当 AI 生成 M-life 私信联系人时，用此格式。
+** 在正文中插入 <mlife_app> 标签，正则会渲染为可点击的联系人条目。
+** 联系人会出现在私信列表页，用户可以点击进入聊天。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "dm_list",
+  "data": {
+    "contact": "蜜桃气泡水",
+    "avatar": "🍑",
+    "level": "Lv3",
+    "vip": "黄金",
+    "lastMessage": "你今天怎么这么晚才上线",
+    "lastTime": "2026-07-07T22:17:00",
+    "age": 24,
+    "job": "舞蹈老师",
+    "hasCharacter": true,
+    "personality": "温柔体贴",
+    "chatStyle": "句尾加波浪线~"
+  }
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- contact: 联系人昵称，唯一标识
+- avatar: 头像 emoji
+- level: Lv1-Lv5
+- vip: 无/白银/黄金/黑金
+- lastMessage: 最后一条消息预览（尽量展示吸引力/暧昧感）
+- lastTime: ISO 时间戳
+- age: 年龄
+- job: 职业（可选）
+- hasCharacter: 是否已开盒（可选）
+- personality: 性格描述（可选，用于AI自动回复用）
+- chatStyle: 聊天风格（可选，用于AI自动回复用）
+- 每次输出一个联系人，正文中可以输出多个 <mlife_app> 标签
+
+# 触发条件
+- {{user}}打开私信列表时
+- AI 想给 {{user}} 推送新联系人时
+- AI 更新联系人状态时
+
+# 示例
+<mlife_app>
+{
+  "page": "dm_list",
+  "data": {
+    "contact": "蜜桃气泡水",
+    "avatar": "🍑",
+    "level": "Lv3",
+    "vip": "黄金",
+    "lastMessage": "你今天怎么这么晚才上线~",
+    "lastTime": "2026-07-07T22:17:00",
+    "age": 24,
+    "hasCharacter": true,
+    "personality": "温柔体贴、开朗健谈、外热内冷",
+    "chatStyle": "句尾加波浪线~，口语化"
+  }
+}
+</mlife_app>
+
+<mlife_app>
+{
+  "page": "dm_list",
+  "data": {
+    "contact": "小野猫",
+    "avatar": "🐱",
+    "level": "Lv4",
+    "vip": "黑金",
+    "lastMessage": "今晚有空吗 一个人好无聊",
+    "lastTime": "2026-07-07T21:45:00",
+    "age": 22,
+    "hasCharacter": true,
+    "personality": "野性、主动、爱玩",
+    "chatStyle": "大胆直白、经常撩人"
+  }
+}
+</mlife_app>
+</UI模板_私信联系人>

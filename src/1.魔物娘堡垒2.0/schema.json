@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "世界": {
+      "default": {
+        "当前时间": "圣历9年 5月4日 8时00分",
+        "当前地点": "诺亚之心广场",
+        "侵蚀度": 15,
+        "侵蚀阶段": "轻度腐化",
+        "当前任务": [],
+        "主要线索": "",
+        "不为人知的事件": ""
+      },
+      "type": "object",
+      "properties": {
+        "当前时间": {
+          "default": "圣历9年 5月4日 8时00分",
+          "type": "string"
+        },
+        "当前地点": {
+          "default": "诺亚之心广场",
+          "type": "string"
+        },
+        "侵蚀度": {
+          "default": 15,
+          "type": "number"
+        },
+        "侵蚀阶段": {
+          "default": "轻度腐化",
+          "type": "string"
+        },
+        "当前任务": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "标题": {
+                "type": "string"
+              },
+              "目标": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "标题",
+              "目标"
+            ]
+          }
+        },
+        "主要线索": {
+          "default": "",
+          "type": "string"
+        },
+        "不为人知的事件": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "主角": {
+      "default": {
+        "等级": 1,
+        "生命值": 100,
+        "最大生命值": 100,
+        "战斗力": 10,
+        "金钱": 500
+      },
+      "type": "object",
+      "properties": {
+        "姓名": {
+          "default": "",
+          "type": "string"
+        },
+        "阵营": {
+          "default": "光明",
+          "type": "string"
+        },
+        "种族": {
+          "default": "人类",
+          "type": "string"
+        },
+        "性别": {
+          "default": "男性",
+          "type": "string"
+        },
+        "金钱": {
+          "default": 500,
+          "type": "number"
+        },
+        "等级": {
+          "default": 1,
+          "type": "number"
+        },
+        "生命值": {
+          "default": 100,
+          "type": "number"
+        },
+        "最大生命值": {
+          "default": 100,
+          "type": "number"
+        },
+        "经验值": {
+          "default": 0,
+          "type": "number"
+        },
+        "下一级经验": {
+          "default": 100,
+          "type": "number"
+        },
+        "战斗力": {
+          "default": 10,
+          "type": "number"
+        },
+        "状态": {
+          "default": "",
+          "type": "string"
+        },
+        "永久状态": {
+          "default": "",
+          "type": "string"
+        },
+        "职业": {
+          "default": "",
+          "type": "string"
+        },
+        "社交关系": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "姓名": {
+                "type": "string"
+              },
+              "关系": {
+                "type": "string"
+              },
+              "好感": {
+                "type": "number"
+              },
+              "描述": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "姓名",
+              "关系",
+              "好感",
+              "描述"
+            ]
+          }
+        },
+        "雌堕程度": {
+          "default": "",
+          "type": "string"
+        },
+        "恶堕程度": {
+          "default": "",
+          "type": "string"
+        },
+        "恶堕值": {
+          "default": 0,
+          "type": "number"
+        },
+        "雌堕值": {
+          "default": 0,
+          "type": "number"
+        },
+        "user恶堕倾向形态": {
+          "default": "",
+          "type": "string"
+        },
+        "持有道具": {
+          "default": "",
+          "type": "string"
+        },
+        "外貌描写": {
+          "default": "",
+          "type": "string"
+        },
+        "变化": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "当前互动对象": {
+      "default": {
+        "等级": 1,
+        "生命值": 100,
+        "最大生命值": 100,
+        "战斗力": 10
+      },
+      "type": "object",
+      "properties": {
+        "姓名": {
+          "default": "",
+          "type": "string"
+        },
+        "阵营": {
+          "default": "中立",
+          "type": "string"
+        },
+        "种族": {
+          "default": "",
+          "type": "string"
+        },
+        "性别": {
+          "default": "",
+          "type": "string"
+        },
+        "等级": {
+          "default": 1,
+          "type": "number"
+        },
+        "生命值": {
+          "default": 100,
+          "type": "number"
+        },
+        "最大生命值": {
+          "default": 100,
+          "type": "number"
+        },
+        "战斗力": {
+          "default": 10,
+          "type": "number"
+        },
+        "临时状态": {
+          "default": "",
+          "type": "string"
+        },
+        "永久状态": {
+          "default": "",
+          "type": "string"
+        },
+        "好感度": {
+          "default": 0,
+          "type": "number"
+        },
+        "雌堕程度": {
+          "default": "",
+          "type": "string"
+        },
+        "恶堕程度": {
+          "default": "",
+          "type": "string"
+        },
+        "恶堕倾向形态": {
+          "default": "",
+          "type": "string"
+        },
+        "飞升": {
+          "default": "无",
+          "type": "string"
+        },
+        "想法": {
+          "default": "",
+          "type": "string"
+        },
+        "外貌描写": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "附近重要人物": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "姓名": {
+            "type": "string"
+          },
+          "状态": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "姓名",
+          "状态"
+        ]
+      }
+    },
+    "地点状态": {
+      "default": {},
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "description": "地点名"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "已解锁": {
+            "type": "boolean"
+          },
+          "探索度": {
+            "type": "number"
+          },
+          "恶堕进度": {
+            "type": "number"
+          },
+          "备注": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "已解锁",
+          "探索度",
+          "恶堕进度",
+          "备注"
+        ]
+      }
+    },
+    "战斗": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "进行中": {
+          "default": false,
+          "type": "boolean"
+        },
+        "敌人": {
+          "default": "",
+          "type": "string"
+        },
+        "敌人等级": {
+          "default": 1,
+          "type": "number"
+        },
+        "敌人生命值": {
+          "default": 100,
+          "type": "number"
+        },
+        "敌人最大生命值": {
+          "default": 100,
+          "type": "number"
+        },
+        "敌人战斗力": {
+          "default": 10,
+          "type": "number"
+        },
+        "敌人恶堕值": {
+          "default": 0,
+          "type": "number"
+        },
+        "回合数": {
+          "default": 0,
+          "type": "number"
+        },
+        "战斗日志": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "_待发送结果": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

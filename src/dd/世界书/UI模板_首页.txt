@@ -1,0 +1,123 @@
+<UI模板_首页>
+** 当{{user}}正在浏览M-life首页/信息流时，必须严格按以下格式输出。每刷新一次输出3-5条动态。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "home",
+  "data": {
+    "posts": [
+      {
+        "hidden": "发帖人的真实状态和动机",
+        "avatar": "emoji或符号",
+        "nick": "用户昵称",
+        "level": "Lv1-Lv5",
+        "vip": "无/白银/黄金/黑金",
+        "time": "发帖时间",
+        "section": "福利自拍/闲聊灌水/资源分享",
+        "body": "帖子正文内容，口语化",
+        "images": [
+          {"desc": "图片描述文字，具体描述拍摄角度穿着光线环境（若有多图则多条）"}
+        ],
+        "paywall": "无/需XX M币解锁",
+        "likes": 数字,
+        "comments": 数字,
+        "shares": 数字,
+        "hotComments": [
+          {"name": "昵称", "text": "评论内容"}
+        ]
+      }
+    ]
+  },
+  "status": {
+    "时间": "描述",
+    "位置": "描述"
+  },
+  "badges": {
+    "home": 0, "match": 0, "live": 0, "dm": 0, "profile": 0
+  }
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 每次输出3-5条动态
+- 动态类型随机混合：纯文字帖、图片帖、擦边帖、日常帖、求助帖、吐槽帖、广告帖
+- 每条动态用 `hidden` 字段写隐藏描述，描述发帖人真实状态和动机，不显示在界面上
+- 符合成人社交软件氛围，动态中约90%带性暗示/擦边内容，约10%是正常日常内容
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+- images 数组中每条 `desc` 要具体（角度、穿着、光线、环境、身体部位）
+- 付费内容只描述可见部分，paywall 标注解锁价格
+- hotComments 可选，高互动帖附带1-2条，无热评则 `[]`
+- 正文口语化、随意，符合成人社交软件氛围
+- section 只能从 "日常自拍" / "闲聊灌水" / "资源分享" 中选
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 多图帖
+当一条动态有多张图时，images 数组包含多个对象：
+```json
+"images": [
+  {"desc": "第一张图描述"},
+  {"desc": "第二张图描述"},
+  {"desc": "第三张图描述"}
+]
+```
+
+# 示例
+<mlife_app>
+{
+  "page": "home",
+  "data": {
+    "posts": [
+      {
+        "hidden": "一个Lv4女用户深夜发的擦边自拍帖，配文暧昧，评论区男用户排队留言",
+        "avatar": "🌙",
+        "nick": "晚安小鹿",
+        "level": "Lv4",
+        "vip": "无",
+        "time": "23:41",
+        "section": "福利自拍",
+        "body": "睡不着 有人陪我聊天吗",
+        "images": [
+          {"desc": "侧躺在床上，穿白色吊带背心，被子盖到腰，锁骨和肩膀线条清晰，光源是床头暖黄色台灯，脸只露下半张，嘴唇微张"}
+        ],
+        "paywall": "无",
+        "likes": 247,
+        "comments": 89,
+        "shares": 12,
+        "hotComments": [
+          {"name": "深夜猎手", "text": "姐姐好美 可以私聊吗"},
+          {"name": "失眠第三天", "text": "同睡不着 加个好友？"}
+        ]
+      },
+      {
+        "hidden": "Lv2男用户刚注册一周，发了条无聊的日常帖，没什么人理",
+        "avatar": "🎮",
+        "nick": "打游戏的废物",
+        "level": "Lv2",
+        "vip": "无",
+        "time": "23:55",
+        "section": "闲聊灌水",
+        "body": "有没有人一起开黑 rank打不动了",
+        "images": [],
+        "paywall": "无",
+        "likes": 3,
+        "comments": 1,
+        "shares": 0,
+        "hotComments": []
+      }
+    ]
+  },
+  "status": {
+    "时间": "23:55",
+    "位置": "家里"
+  },
+  "badges": {
+    "home": 0, "match": 1, "live": 0, "dm": 0, "profile": 0
+  }
+}
+</mlife_app>
+</UI模板_首页>

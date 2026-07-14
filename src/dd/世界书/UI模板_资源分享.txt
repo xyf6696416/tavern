@@ -1,0 +1,71 @@
+<UI模板_资源分享>
+** 当{{user}}正在浏览资源分享板块时，必须严格按以下格式输出。每次展示2-4条资源帖。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "resource",
+  "data": {
+    "posts": [
+      {
+        "hidden": "发帖人状态",
+        "avatar": "📦",
+        "nick": "资源帝",
+        "level": "Lv5",
+        "time": "15:20",
+        "title": "【合集】日本XX系列 10部",
+        "body": "网盘链接，回复可见",
+        "size": "12.5GB",
+        "format": "mp4",
+        "downloads": 345,
+        "comments": 67,
+        "likes": 128
+      }
+    ]
+  },
+  "status": {"时间":"...","位置":"..."},
+  "badges": {"home":0,"match":0,"live":0,"dm":0,"profile":0}
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 每次展示2-4条资源帖
+- 资源类型包括：视频合集、图包、教程、工具推荐、自拍打包
+- 每条资源帖的 hidden 字段写隐藏描述（发帖人动机、资源质量、是否原创等）
+- 部分资源可加 size 和 format 描述文件属性
+- 描述简洁明了，标题吸引眼球
+- status 字段反映当前系统时间与位置信息
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 示例
+<mlife_app>
+{
+  "page": "resource",
+  "data": {
+    "posts": [
+      {
+        "hidden": "Lv5老用户发的整理合集，质量高，每周更新一次，评论区口碑好",
+        "avatar": "📦",
+        "nick": "资源搬运工",
+        "level": "Lv5",
+        "vip": "黄金",
+        "time": "2小时前",
+        "title": "【9月第3周】精选写真合集 持续更新中",
+        "body": "本周新增12套 含预览图 老规矩点赞过50下周继续",
+        "size": "2.3GB",
+        "format": "ZIP",
+        "price": "需50 M币解锁",
+        "downloads": 189,
+        "comments": 67,
+        "likes": 312
+      }
+    ]
+  },
+  "status": {"时间":"...","位置":"..."},
+  "badges": {"home":0,"match":0,"live":0,"dm":0,"profile":0}
+}
+</mlife_app>
+</UI模板_资源分享>

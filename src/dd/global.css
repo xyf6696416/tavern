@@ -1,0 +1,178 @@
+/* ═══════════════════════════════════════════════════
+   M-life 全局主题 & 设计系统 v2
+   ──────────────────────────────────────────────────
+   设计语言：午夜都市 · 暧昧霓虹 · 玻璃质感
+   调色板：深空蓝黑底 + 霓虹粉红主色 + 暖白文字
+   ═══════════════════════════════════════════════════ */
+
+/* ── 亮色模式 ── */
+:root, [data-theme="light"] {
+  /* 主色 */
+  --ml-primary: #E84A64;
+  --ml-primary-dim: rgba(232, 74, 100, 0.08);
+  --ml-primary-glow: rgba(232, 74, 100, 0.18);
+
+  /* 背景层 */
+  --ml-bg: #F5F3F0;
+  --ml-bg-card: #FFFFFF;
+  --ml-bg-header: rgba(255, 255, 255, 0.85);
+  --ml-bg-input: #EDEAE7;
+  --ml-bg-hover: #F0EDEA;
+
+  /* 手机框 */
+  --ml-phone-bg: #FFFFFF;
+  --ml-phone-border: rgba(0, 0, 0, 0.06);
+
+  /* 文字 */
+  --ml-text: #1A1826;
+  --ml-text-secondary: #7C788A;
+  --ml-text-label: #B0ACB8;
+
+  /* 导航 */
+  --ml-nav-bg: rgba(255, 255, 255, 0.92);
+  --ml-nav-active: #E84A64;
+  --ml-nav-inactive: #B0ACB8;
+
+  /* 分割线/阴影/遮罩 */
+  --ml-divider: rgba(0, 0, 0, 0.06);
+  --ml-shadow: rgba(0, 0, 0, 0.06);
+  --ml-overlay: rgba(0, 0, 0, 0.35);
+  --ml-shadow-lg: rgba(0, 0, 0, 0.1);
+
+  /* 功能色（与主题无关的固定色） */
+  --ml-green: #22C55E;
+  --ml-blue: #3B82F6;
+  --ml-amber: #F59E0B;
+  --ml-red: #EF4444;
+  --ml-gold: #C9A96E;
+  --ml-gold-dim: #8B7340;
+  --ml-gold-glow: rgba(201, 169, 110, 0.15);
+}
+
+/* ── 暗色模式（默认） ── */
+[data-theme="dark"] {
+  --ml-primary: #FF5C77;
+  --ml-primary-dim: rgba(255, 92, 119, 0.12);
+  --ml-primary-glow: rgba(255, 92, 119, 0.2);
+
+  --ml-bg: #0B0B14;
+  --ml-bg-card: #14141F;
+  --ml-bg-header: rgba(20, 20, 31, 0.92);
+  --ml-bg-input: #1E1E2C;
+  --ml-bg-hover: #1A1A28;
+
+  --ml-phone-bg: #14141F;
+  --ml-phone-border: rgba(255, 255, 255, 0.06);
+
+  --ml-text: #E8E6E3;
+  --ml-text-secondary: #8B8794;
+  --ml-text-label: #5C5866;
+
+  --ml-nav-bg: rgba(20, 20, 31, 0.95);
+  --ml-nav-active: #FF5C77;
+  --ml-nav-inactive: #5C5866;
+
+  --ml-divider: rgba(255, 255, 255, 0.06);
+  --ml-shadow: rgba(0, 0, 0, 0.25);
+  --ml-overlay: rgba(0, 0, 0, 0.6);
+  --ml-shadow-lg: rgba(0, 0, 0, 0.4);
+
+  --ml-green: #22C55E;
+  --ml-blue: #3B82F6;
+  --ml-amber: #F59E0B;
+  --ml-red: #EF4444;
+  --ml-gold: #C9A96E;
+  --ml-gold-dim: #8B7340;
+  --ml-gold-glow: rgba(201, 169, 110, 0.15);
+}
+
+/* ── 全局重置 ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── 选择文本 ── */
+::selection {
+  background: var(--ml-primary-dim);
+  color: var(--ml-primary);
+}
+
+/* ── 滚动条 ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ml-text-label);
+  border-radius: 4px;
+}
+
+/* ── 动画 ── */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes toastIn {
+  from { transform: translateY(-16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-16px); opacity: 0; }
+}
+
+@keyframes ballPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── 骨架屏 shimmer（全局类） ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--ml-divider) 25%, var(--ml-bg-card) 50%, var(--ml-divider) 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}

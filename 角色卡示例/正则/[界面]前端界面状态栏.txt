@@ -1,0 +1,7 @@
+```
+<body>
+<script>
+$('body').load('https://testingcf.jsdelivr.net/gh/StageDog/tavern_helper_template/dist/角色卡示例/界面/状态栏/index.html')
+</script>
+</body>
+```

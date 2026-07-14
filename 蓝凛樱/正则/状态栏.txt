@@ -1,0 +1,520 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色状态</title>
+    <style>
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #555;
+            --text-secondary: #888;
+            --accent-soft: #F8BBD0;
+            --border-soft: #eee;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --deep-black-text: #333;
+        }
+
+        body {
+            background-color: transparent;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 5px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .status-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            max-width: 400px;
+            margin: 0 auto;
+            border: 1px solid var(--border-soft);
+        }
+
+        .card-header {
+            background-color: var(--accent-soft);
+            color: #fff;
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.25em;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .card-datetime-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            padding: 9px 15px;
+            font-size: 1.05em;
+            color: var(--text-secondary);
+            background-color: rgba(240, 240, 240, 0.5);
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .card-datetime-row > div {
+            white-space: nowrap;
+        }
+
+        .card-body {
+            padding: 5px 0;
+        }
+
+        .section {
+            margin-bottom: 5px;
+        }
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-header {
+            padding: 6px 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-soft);
+            transition: background-color 0.2s ease;
+        }
+        .section-header:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        .section-header span:first-child {
+            font-weight: bold;
+            color: var(--deep-black-text);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease-out;
+            padding: 0 12px;
+        }
+
+        .section-content.expanded {
+            max-height: 2000px;
+            padding: 8px 12px 10px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .property {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+            font-size: 0.9em;
+        }
+         .property:last-child {
+             margin-bottom: 0;
+         }
+
+        .property-name {
+            color: var(--text-secondary);
+            margin-right: 5px;
+        }
+
+        .value-main {
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        .value-description {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-left: 5px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 3px;
+            }
+            .status-card {
+                max-width: none;
+                margin: 0;
+                border-radius: 8px;
+            }
+            .card-header {
+                padding: 10px 12px;
+            }
+            .card-header h2 {
+                 font-size: 1.1em;
+            }
+            .card-datetime-row {
+                font-size: 0.95em;
+                padding: 7px 10px;
+                gap: 12px;
+            }
+            .section-header {
+                padding: 5px 10px;
+            }
+             .section-content.expanded {
+                 padding: 6px 10px 8px;
+            }
+            .property {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="status-card" id="status-card">
+    <div class="card-header">
+        <h2>僕の彼女と可愛い妹が、あの天降系の兄に寝取られるなんてありえない！</h2>
+    </div>
+    <div class="card-datetime-row">
+        <div id="world-date">--月--日</div>
+        <div id="world-day">--</div>
+        <div id="world-time">--:--</div>
+        <div id="world-weather">☀️</div>
+    </div>
+
+    <div class="card-body">
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>柚木凛</span>
+                <span>▼</span>
+            </div>
+            <div class="section-content">
+                <div class="property">
+                    <span class="property-name">好感度：</span>
+                    <span class="value-main" id="rin-affection-user">0</span>
+                    <span class="value-description" id="rin-affection-user-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">对晴人厌烦度：</span>
+                    <span class="value-main" id="rin-annoyance-haruto">0</span>
+                    <span class="value-description" id="rin-annoyance-haruto-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">理想恋人：</span>
+                    <span class="value-main" id="rin-ideal-lover">N/A</span>
+                    <span class="value-description" id="rin-ideal-lover-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">穿着：</span>
+                    <span class="value-main" id="rin-clothing">N/A</span>
+                    <span class="value-description" id="rin-clothing-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">当前位置：</span>
+                    <span class="value-main" id="rin-location">N/A</span>
+                    <span class="value-description" id="rin-location-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">梦游状态：</span>
+                    <span class="value-main" id="rin-sleepwalking">N/A</span>
+                    <span class="value-description" id="rin-sleepwalking-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">性事记录：</span>
+                    <span class="value-main" id="rin-sex-log">N/A</span>
+                    <span class="value-description" id="rin-sex-log-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">体位动作：</span>
+                    <span class="value-main" id="rin-posture">N/A</span>
+                    <span class="value-description" id="rin-posture-desc"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>秋山蓝</span>
+                <span>▼</span>
+            </div>
+            <div class="section-content">
+                <div class="property">
+                    <span class="property-name">好感度：</span>
+                    <span class="value-main" id="ran-affection-user">0</span>
+                    <span class="value-description" id="ran-affection-user-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">对晴人厌烦度：</span>
+                    <span class="value-main" id="ran-annoyance-haruto">0</span>
+                    <span class="value-description" id="ran-annoyance-haruto-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">穿着：</span>
+                    <span class="value-main" id="ran-clothing">N/A</span>
+                    <span class="value-description" id="ran-clothing-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">当前位置：</span>
+                    <span class="value-main" id="ran-location">N/A</span>
+                    <span class="value-description" id="ran-location-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">行为倾向：</span>
+                    <span class="value-main" id="ran-behavior-tendency">N/A</span>
+                    <span class="value-description" id="ran-behavior-tendency-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">性事记录：</span>
+                    <span class="value-main" id="ran-sex-log">N/A</span>
+                    <span class="value-description" id="ran-sex-log-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">体位动作：</span>
+                    <span class="value-main" id="ran-posture">N/A</span>
+                    <span class="value-description" id="ran-posture-desc"></span>
+                </div>
+              	<div class="property">
+                    <span class="property-name">心里话：</span>
+                    <span class="value-main" id="ran-thoughts">N/A</span>
+                    <span class="value-description" id="ran-thoughts-desc"></span>
+        </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>神原樱</span>
+                <span>▼</span>
+            </div>
+            <div class="section-content">
+                <div class="property">
+                    <span class="property-name">好感度：</span>
+                    <span class="value-main" id="sakura-affection-user">0</span>
+                    <span class="value-description" id="sakura-affection-user-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">对晴人厌烦度：</span>
+                    <span class="value-main" id="sakura-annoyance-haruto">0</span>
+                    <span class="value-description" id="sakura-annoyance-haruto-desc"></span>
+                </div>
+                 <div class="property">
+                    <span class="property-name">穿着：</span>
+                    <span class="value-main" id="sakura-clothing">N/A</span>
+                    <span class="value-description" id="sakura-clothing-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">当前位置：</span>
+                    <span class="value-main" id="sakura-location">N/A</span>
+                    <span class="value-description" id="sakura-location-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">性事记录：</span>
+                    <span class="value-main" id="sakura-sex-log">N/A</span>
+                    <span class="value-description" id="sakura-sex-log-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">自认夫妻关系：</span>
+                    <span class="value-main" id="sakura-marital-status">N/A</span>
+                    <span class="value-description" id="sakura-marital-status-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">体位动作：</span>
+                    <span class="value-main" id="sakura-posture">N/A</span>
+                    <span class="value-description" id="sakura-posture-desc"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span>秋山晴人</span>
+                <span>▼</span>
+            </div>
+            <div class="section-content">
+                <div class="property">
+                    <span class="property-name">绿帽值：</span>
+                    <span class="value-main" id="haruto-cuckold-value">0</span>
+                    <span class="value-description" id="haruto-cuckold-value-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">当前位置：</span>
+                    <span class="value-main" id="haruto-location">N/A</span>
+                    <span class="value-description" id="haruto-location-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">当前动作：</span>
+                    <span class="value-main" id="haruto-action">N/A</span>
+                    <span class="value-description" id="haruto-action-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">当前幻想：</span>
+                    <span class="value-main" id="haruto-fantasy">N/A</span>
+                    <span class="value-description" id="haruto-fantasy-desc"></span>
+                </div>
+                <div class="property">
+                    <span class="property-name">当前心理状态：</span>
+                    <span class="value-main" id="haruto-mental-state">N/A</span>
+                    <span class="value-description" id="haruto-mental-state-desc"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function SafeGetValue(obj, path, defaultValue = "N/A") {
+        let keys = Array.isArray(path) ? path : path.split('.');
+        let current = obj;
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            if (current === undefined || current === null || typeof current !== 'object' || !current.hasOwnProperty(key)) {
+                return defaultValue;
+            }
+            current = current[key];
+        }
+        if (current === undefined || current === null) {
+            return defaultValue;
+        }
+        // If SafeGetValue is expected to return the array itself for updateProgressBar
+        // then remove the Array.isArray check from here, or pass the whole 'current'
+        // Let updateProgressBar handle if rawValueFromCharacterData is an array
+        return current; // Return the value directly, could be array, string, number etc.
+    }
+
+    function updateProgressBar(barId, valueMainId, valueDescId, rawValueFromCharacterData, min, max, color) {
+        const valueMainDisplay = document.getElementById(valueMainId);
+        const valueDescDisplay = document.getElementById(valueDescId);
+
+        if (!valueMainDisplay) {
+            return;
+        }
+
+        let workString;
+
+        if (Array.isArray(rawValueFromCharacterData)) {
+            workString = String(rawValueFromCharacterData[0]);
+            // The description from rawValueFromCharacterData[1] is NOT displayed here
+            // by this function in valueDescDisplay. That span is cleared.
+        } else {
+            workString = String(rawValueFromCharacterData);
+        }
+
+        // Remove trailing " (description)" from workString itself
+        const descMatch = workString.match(/\s*\((.*)\)$/);
+        if (descMatch) {
+            workString = workString.substring(0, descMatch.index).trim();
+        }
+
+        // Handle "->" to get the final display value
+        const parts = workString.split('->');
+        let finalDisplayValue;
+        if (parts.length > 1) {
+            finalDisplayValue = parts[1].trim(); // Take the part after "->"
+        } else {
+            finalDisplayValue = workString; // No "->", so use the (cleaned) string as is
+        }
+
+        valueMainDisplay.innerText = finalDisplayValue;
+
+        // Ensure description span is always empty
+        if (valueDescDisplay) {
+            valueDescDisplay.innerText = "";
+        }
+    }
+
+    async function initDisplay() {
+        try {
+            const messages = await getChatMessages(getCurrentMessageId());
+            if (!messages || messages.length === 0 || !messages[0].data) {
+                document.getElementById('status-card').innerHTML = "<p style='color:red; padding:10px;'>无法加载状态数据 (messages empty)</p>";
+                return;
+            }
+            const gameData = messages[0].data;
+            const characterData = gameData.display_data || gameData.stat_data;
+            if (!characterData) {
+                 document.getElementById('status-card').innerHTML = "<p style='color:red; padding:10px;'>无法加载状态数据 (characterData missing)</p>";
+                 return;
+            }
+
+            if (characterData.世界) {
+                updateProgressBar(null, 'world-date', null, SafeGetValue(characterData, '世界.日期', '--月--日'));
+
+                let weekdayInitial = SafeGetValue(characterData, '世界.星期几', '--'); // This will be the array ["一", "desc"] or just "一"
+                let weekdayValueFromArray = Array.isArray(weekdayInitial) ? weekdayInitial[0] : weekdayInitial; // Extract "一"
+                let weekdayDisplay = String(weekdayValueFromArray); // Ensure it's a string for map lookup
+                const weekdayMap = { "一": "星期一", "二": "星期二", "三": "星期三", "四": "星期四", "五": "星期五", "六": "星期六", "日": "星期日" };
+                if (weekdayMap[weekdayDisplay]) { // Use String(weekdayValueFromArray) if it's not already string
+                    weekdayDisplay = weekdayMap[weekdayDisplay];
+                }
+                updateProgressBar(null, 'world-day', null, weekdayDisplay); // weekdayDisplay is now "星期一" or original if not mapped
+
+                updateProgressBar(null, 'world-time', null, SafeGetValue(characterData, '世界.时间', '--:--'));
+                updateProgressBar(null, 'world-weather', null, SafeGetValue(characterData, '世界.天气图标',  '☀️'));
+            }
+
+            if (characterData.柚木凛) {
+                updateProgressBar(null, 'rin-affection-user', 'rin-affection-user-desc', SafeGetValue(characterData, '柚木凛.好感度')); // Path updated
+                updateProgressBar(null, 'rin-annoyance-haruto', 'rin-annoyance-haruto-desc', SafeGetValue(characterData, '柚木凛.厌烦度.对秋山晴人'));
+                updateProgressBar(null, 'rin-ideal-lover', 'rin-ideal-lover-desc', SafeGetValue(characterData, '柚木凛.理想恋人'));
+                updateProgressBar(null, 'rin-clothing', 'rin-clothing-desc', SafeGetValue(characterData, '柚木凛.穿着'));
+                updateProgressBar(null, 'rin-location', 'rin-location-desc', SafeGetValue(characterData, '柚木凛.当前位置'));
+                updateProgressBar(null, 'rin-sleepwalking', 'rin-sleepwalking-desc', SafeGetValue(characterData, '柚木凛.梦游状态'));
+                updateProgressBar(null, 'rin-sex-log', 'rin-sex-log-desc', SafeGetValue(characterData, '柚木凛.性事记录'));
+                updateProgressBar(null, 'rin-posture', 'rin-posture-desc', SafeGetValue(characterData, '柚木凛.体位动作'));
+            }
+
+            if (characterData.秋山蓝) {
+                updateProgressBar(null, 'ran-affection-user', 'ran-affection-user-desc', SafeGetValue(characterData, '秋山蓝.好感度')); // Path updated
+                updateProgressBar(null, 'ran-annoyance-haruto', 'ran-annoyance-haruto-desc', SafeGetValue(characterData, '秋山蓝.厌烦度.对秋山晴人'));
+                updateProgressBar(null, 'ran-clothing', 'ran-clothing-desc', SafeGetValue(characterData, '秋山蓝.穿着'));
+                updateProgressBar(null, 'ran-location', 'ran-location-desc', SafeGetValue(characterData, '秋山蓝.当前位置'));
+                updateProgressBar(null, 'ran-behavior-tendency', 'ran-behavior-tendency-desc', SafeGetValue(characterData, '秋山蓝.行为倾向'));
+                updateProgressBar(null, 'ran-sex-log', 'ran-sex-log-desc', SafeGetValue(characterData, '秋山蓝.性事记录'));
+                updateProgressBar(null, 'ran-posture', 'ran-posture-desc', SafeGetValue(characterData, '秋山蓝.体位动作'));
+              	updateProgressBar(null, 'ran-thoughts', 'ran-thoughts-desc', SafeGetValue(characterData, '秋山蓝.心里话'));
+            }
+
+            if (characterData.神原樱) {
+                updateProgressBar(null, 'sakura-affection-user', 'sakura-affection-user-desc', SafeGetValue(characterData, '神原樱.好感度')); // Path updated
+                updateProgressBar(null, 'sakura-annoyance-haruto', 'sakura-annoyance-haruto-desc', SafeGetValue(characterData, '神原樱.厌烦度.对秋山晴人'));
+                updateProgressBar(null, 'sakura-clothing', 'sakura-clothing-desc', SafeGetValue(characterData, '神原樱.穿着'));
+                updateProgressBar(null, 'sakura-location', 'sakura-location-desc', SafeGetValue(characterData, '神原樱.当前位置'));
+                updateProgressBar(null, 'sakura-sex-log', 'sakura-sex-log-desc', SafeGetValue(characterData, '神原樱.性事记录'));
+                updateProgressBar(null, 'sakura-marital-status', 'sakura-marital-status-desc', SafeGetValue(characterData, '神原樱.自认夫妻关系'));
+                updateProgressBar(null, 'sakura-posture', 'sakura-posture-desc', SafeGetValue(characterData, '神原樱.体位动作'));
+            }
+
+            if (characterData.秋山晴人) {
+                updateProgressBar(null, 'haruto-cuckold-value', 'haruto-cuckold-value-desc', SafeGetValue(characterData, '秋山晴人.状态.绿帽值'));
+                updateProgressBar(null, 'haruto-location', 'haruto-location-desc', SafeGetValue(characterData, '秋山晴人.当前位置'));
+                updateProgressBar(null, 'haruto-action', 'haruto-action-desc', SafeGetValue(characterData, '秋山晴人.当前动作'));
+                updateProgressBar(null, 'haruto-fantasy', 'haruto-fantasy-desc', SafeGetValue(characterData, '秋山晴人.当前幻想'));
+                updateProgressBar(null, 'haruto-mental-state', 'haruto-mental-state-desc', SafeGetValue(characterData, '秋山晴人.当前心理状态'));
+            }
+
+            const firstSectionHeader = document.querySelector('.status-card .card-body .section:first-child .section-header');
+            if (firstSectionHeader) {
+                const content = firstSectionHeader.nextElementSibling;
+                 if (content && !content.classList.contains('expanded')) {
+                    toggleSection(firstSectionHeader); // Expand first section by default
+                }
+            }
+
+        } catch (error) {
+            document.getElementById('status-card').innerHTML = `<p style='color:red; padding:10px;'>状态栏加载出错: ${error.message}</p>`;
+             console.error("Status bar error:", error);
+        }
+    }
+
+    function toggleSection(element) {
+        const content = element.nextElementSibling;
+        const arrow = element.querySelector('span:last-child');
+        if (!content || !arrow) return;
+        const isExpanded = content.classList.toggle('expanded');
+        element.classList.toggle('expanded-header', isExpanded);
+        arrow.innerText = isExpanded ? '▲' : '▼';
+    }
+
+    document.addEventListener('DOMContentLoaded', initDisplay);
+</script>
+</body>
+</html>
+```

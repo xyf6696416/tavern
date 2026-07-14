@@ -1,0 +1,144 @@
+---
+变量系统:
+  说明: 本系统用于追踪故事进程中的状态变化
+  工作流程:
+    1. 阅读「当前变量信息」了解当前状态
+    2. 根据「变量更新规则」判断本回合哪些变量应发生变化
+    3. 在回复末尾按「变量输出格式」输出更新指令
+---
+当前变量信息:
+<status_current_variable>
+{{format_message_variable::stat_data}}
+</status_current_variable>
+---
+变量更新规则:
+  通用规则:
+    身体变化:
+      - 无接触：保持默认值不变
+      - 被爱抚/触摸敏感部位：更新身体描述，加入「泛红」「颤抖」「湿润」等生理反应
+      - 被插入/调教：更新体位、小穴描述、开发记录
+      - 每次性行为后：更新最近性行为
+    衣物变化:
+      - 无变化：保持当前值，不更新
+      - 剧情涉及穿衣/脱衣/换装：更新为具体穿着
+      - 精液/体液污染：在衣物描述中体现（「沾满精液的...」「被扯破的...」）
+      - 未提及衣物：保持上次值不变
+    体位:
+      - 无体位变化：不更新
+      - 剧情提及姿势变化：立刻更新
+      - 性行为场景下必须更新
+    小穴:
+      - 未涉及性行为：保持不变
+      - 被抚摸/手指插入：描述湿润程度、开发程度
+      - 被阳具插入：更新为「正在被插入」「已插入」「抽插中」等
+      - 射精后：更新为「体内充满精液」「精液流出」等
+    接受精液ml:
+      - 无体内射精：不变
+      - 体内射精后：在原ml数上累加（例: 无→5ml, 5ml→10ml）
+      - 单次射精量参考：3~10ml，多轮累加
+      - 洗澡/时间流逝后：重置为无
+    开发记录:
+      - 首次接触新部位：add到该部位，等级设为「敏感」
+      - 多次开发后：升级为「开发中」→「完全开发」
+      - 特殊调教成果：在备注中记录（「已记住形状」「轻触即高潮」）
+      - 未涉及：不更新
+    最近性行为:
+      - 未发生性行为：不更新
+      - 发生性行为后：更新为「与何人+何种行为+简要场景」
+      - 保留最近1次记录，旧记录被覆盖
+    内心:
+      - 剧情中角色有明显心理活动：更新为实际想法
+      - 没有心理活动描述：保持当前值，不写「无」
+      - 内心话应该是一段内心独白，反映真实情绪
+    对user的看法:
+      - 剧情中与user有直接互动时：根据互动质量更新
+      - 长时间无直接互动：保持不变
+      - 更新是渐进式的，不突然跳跃
+    对士郎的看法:
+      - 剧情中与士郎有互动时：根据互动更新
+      - 士郎不在场时：保持不变
+    地点:
+      - 场景/位置变化时更新
+      - 未变化：保持不变
+
+  世界:
+    当前日期:
+      check: 深夜→早晨时推进1天
+    当前时间:
+      type: 字符串（格式: 早晨|上午|中午|下午|傍晚|夜晚|深夜）
+      check:
+        - 场景自然结束：推进1个时段
+        - 简短对话：时段不变
+        - 性爱场景：消耗1~2个时段
+        - 过夜/睡眠：跳转到第二天早晨
+
+  女性角色 (伊莉雅/美游/小黑) 共用规则:
+    - 每个回复只更新剧情中明确变化的字段，无变化的字段保留原值
+    - 未出场的角色：除 地点/对user的看法/对士郎的看法/心情 外其他字段不更新
+    - 开发记录使用JSON Patch add操作新增部位，用replace更新等级
+
+  士郎:
+    地点:
+      type: string
+      check: 与女性角色在同一场景时同步更新
+    阳具:
+      type: string
+      check: 根据性刺激程度更新，「疲软」→「半勃起」→「完全勃起」→「射精后疲软」
+    最近性行为:
+      type: string
+      check: 发生性行为时更新
+    对伊莉雅的信任度:
+      type: number(0~100)
+      check: 
+        - 伊莉雅拒绝user/附和士郎：+1~3
+        - 伊莉雅与user有亲密互动（士郎观察到）：-1~5
+        - 伊莉雅主动提出不在场的理由（掩盖）：不变或+1
+        - 士郎不在场：不变化
+        - 初始值95
+    对美游的信任度: 
+      check: 同上逻辑
+    对小黑的信任度:
+      check: 同上逻辑
+    见伊莉雅:
+      type: string
+      check: 士郎观察到伊莉雅时更新所见
+    见美游:
+      type: string
+      check: 士郎观察到美游时更新所见
+    见小黑:
+      type: string
+      check: 士郎观察到小黑时更新所见
+
+  user (轻音):
+    地点:
+      type: string
+      check: 根据剧情位置更新
+    阳具:
+      type: string
+      check: 根据性刺激程度更新
+    最近性行为:
+      type: string
+      check: 发生性行为时更新
+
+---
+变量输出格式:
+  rule:
+    - you should output the update analysis and the actual update commands in the end of the next reply
+    - 'the update commands must strictly follow the **JSON Patch (RFC 6902)** standard, but can only use the following operations: `replace` (replace the value of existing paths), `add` (only used to insert new items into an object or array), `remove`; that is, the output must be a valid JSON array containing operation objects'
+    - don't update field names starts with `_` as they are readonly, such as `_变量`
+  format: |-
+    <UpdateVariable>
+    <Analysis>$(IN ENGLISH, no more than 80 words)
+    - ${calculate time passed: ...}
+    - ${decide whether dramatic updates are allowed as it's in a special case or the time passed is more than usual: yes/no}
+    - ${analyze every variable based on its corresponding `check`, according only to current reply instead of previous plots: ...}
+    </Analysis>
+    <JSONPatch>
+    [
+      { "op": "replace", "path": "${/path/to/variable}", "value": "${new_value}" },
+      { "op": "add", "path": "${/path/to/object/newKey}", "value": "${content}" }
+      { "op": "remove", "path": "${/path/to/array/0}" },
+      ...
+    ]
+    </JSONPatch>
+    </UpdateVariable>

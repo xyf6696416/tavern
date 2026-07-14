@@ -1,0 +1,168 @@
+<UI模板_私信>
+** 当{{user}}收到私信或查看私信时，AI可以在正文中任意位置插入私信对话窗口。
+** 每个对话窗口用一对<mlife_app>标签包裹。
+** 正文中可以出现多个<mlife_app>标签，每个对应不同人的对话。
+** 正则会自动将每个标签渲染为独立的聊天界面。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "dm",
+  "data": {
+    "contact": "对方昵称",
+    "avatar": "头像emoji",
+    "level": "Lv1-Lv5",
+    "messages": [
+      {
+        "type": "incoming",
+        "hidden": "隐藏描述：对方发送这条消息时的状态/情绪/环境描述",
+        "time": "时间",
+        "text": "消息内容"
+      },
+      {
+        "type": "outgoing",
+        "hidden": "隐藏描述：{{user}}发送消息时的状态",
+        "time": "时间",
+        "text": "消息内容",
+        "status": "已读/未读"
+      },
+      {
+        "type": "incoming",
+        "hidden": "隐藏描述：对方发送这条消息时的状态",
+        "time": "时间",
+        "msgType": "voice",
+        "duration": "0:XX",
+        "transcript": "语音转文字内容"
+      },
+      {
+        "type": "incoming",
+        "hidden": "隐藏描述：对方发送这条消息时的状态",
+        "time": "时间",
+        "msgType": "image",
+        "images": [{"desc":"图片描述文字——拍摄角度、穿着、光线、环境、身体部位"}]
+      }
+    ]
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 每条消息为 messages 数组中的一个对象
+- type = incoming 为对方发的消息，outgoing 为{{user}}发的消息
+- 每条消息用 hidden 字段写状态描述，不显示在界面上
+- 消息类型：text（纯文字）、voice（语音，标注 duration+transcript）、image（图片，images数组+desc描述）
+- 图片描述要具体：角度、穿着、光线、环境、身体部位
+- 可以在正文中插入多个<mlife_app>标签，每个对应不同人的对话
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 单条私信示例
+<mlife_app>
+{
+  "page": "dm",
+  "data": {
+    "contact": "蜜桃气泡水",
+    "avatar": "🍑",
+    "level": "Lv3",
+    "messages": [
+      {
+        "type": "incoming",
+        "hidden": "她刚下班回到出租屋，换了居家短裤和宽松T恤，窝在沙发上刷手机",
+        "time": "22:17",
+        "text": "你今天怎么这么晚才上线"
+      },
+      {
+        "type": "outgoing",
+        "hidden": "{{user}}靠在沙发上，随手回复",
+        "time": "22:18",
+        "text": "加班了 刚到家",
+        "status": "已读"
+      },
+      {
+        "type": "incoming",
+        "hidden": "她看到回复后笑了一下，缩进被子里打字",
+        "time": "22:18",
+        "text": "辛苦啦 吃饭了吗"
+      },
+      {
+        "type": "incoming",
+        "hidden": "她犹豫了一下还是发了语音",
+        "time": "22:20",
+        "msgType": "voice",
+        "duration": "0:03",
+        "transcript": "想你了"
+      }
+    ]
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+
+# 正文中多条私信示例
+（正文叙述...）
+
+我打开M-life，两条新私信跳了出来。
+
+<mlife_app>
+{
+  "page": "dm",
+  "data": {
+    "contact": "蜜桃气泡水",
+    "avatar": "🍑",
+    "level": "Lv3",
+    "messages": [
+      {
+        "type": "incoming",
+        "hidden": "她刚洗完澡，头发还湿着，裹着浴巾坐在床边",
+        "time": "22:17",
+        "text": "你今天怎么这么晚才上线"
+      },
+      {
+        "type": "outgoing",
+        "hidden": "{{user}}靠在沙发上，随手回复",
+        "time": "22:18",
+        "text": "加班了 刚到家",
+        "status": "已读"
+      }
+    ]
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+
+（正文继续...）
+
+另一条是小野猫发来的。
+
+<mlife_app>
+{
+  "page": "dm",
+  "data": {
+    "contact": "小野猫",
+    "avatar": "🐱",
+    "level": "Lv4",
+    "messages": [
+      {
+        "type": "incoming",
+        "hidden": "她躺在床上，只穿了黑色蕾丝内衣，手指划着屏幕",
+        "time": "21:45",
+        "text": "今晚有空吗 一个人好无聊"
+      },
+      {
+        "type": "outgoing",
+        "hidden": "{{user}}犹豫了一下，还是回了",
+        "time": "21:50",
+        "text": "可能吧 怎么了",
+        "status": "未读"
+      }
+    ]
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+
+（正文继续...）
+</UI模板_私信>

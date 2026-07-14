@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "default": {},
+  "type": "object",
+  "properties": {
+    "状态栏": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "日期和时间": {
+          "default": "--",
+          "type": "string"
+        }
+      }
+    },
+    "世界": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "当前日期": {
+          "default": "2026/07/01",
+          "type": "string"
+        },
+        "当前时间": {
+          "default": "早晨",
+          "type": "string",
+          "enum": [
+            "早晨",
+            "上午",
+            "中午",
+            "下午",
+            "傍晚",
+            "夜晚",
+            "深夜"
+          ]
+        },
+        "当前星期": {
+          "default": "星期三",
+          "type": "string"
+        }
+      }
+    },
+    "伊莉雅": {
+      "$ref": "#/$defs/__schema0"
+    },
+    "美游": {
+      "$ref": "#/$defs/__schema0"
+    },
+    "小黑": {
+      "$ref": "#/$defs/__schema0"
+    },
+    "士郎": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "地点": {
+          "default": "穗群原学园·教室",
+          "type": "string"
+        },
+        "阳具": {
+          "default": "🍆 疲软状态，正常尺寸",
+          "type": "string"
+        },
+        "最近性行为": {
+          "default": "💏 无",
+          "type": "string"
+        },
+        "对伊莉雅的信任度": {
+          "default": 95,
+          "type": "number"
+        },
+        "对美游的信任度": {
+          "default": 95,
+          "type": "number"
+        },
+        "对小黑的信任度": {
+          "default": 95,
+          "type": "number"
+        },
+        "见伊莉雅": {
+          "default": "",
+          "type": "string"
+        },
+        "见美游": {
+          "default": "",
+          "type": "string"
+        },
+        "见小黑": {
+          "default": "",
+          "type": "string"
+        }
+      }
+    },
+    "user": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "地点": {
+          "default": "教室",
+          "type": "string"
+        },
+        "阳具": {
+          "default": "🍆 疲软状态，正常尺寸",
+          "type": "string"
+        },
+        "最近性行为": {
+          "default": "💏 无",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "__schema0": {
+      "default": {},
+      "type": "object",
+      "properties": {}
+    }
+  }
+}

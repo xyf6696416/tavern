@@ -1,0 +1,7 @@
+```
+<body>
+<script>
+$('body').load('http://localhost:5501/yly/index.html')
+</script>
+</body>
+```

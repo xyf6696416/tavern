@@ -1,0 +1,67 @@
+<UI模板_闲聊灌水>
+** 当{{user}}正在浏览闲聊灌水板块时，必须严格按以下格式输出。每次展示3-5条帖子。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "chat",
+  "data": {
+    "posts": [
+      {
+        "hidden": "发帖人状态",
+        "avatar": "🎮",
+        "nick": "打游戏的废物",
+        "level": "Lv2",
+        "time": "23:55",
+        "title": "有没有人一起开黑",
+        "body": "rank打不动了",
+        "replies": 12,
+        "views": 89,
+        "likes": 3
+      }
+    ]
+  }
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 每次展示3-5条帖子
+- 闲聊灌水是最随意的板块，内容杂：吐槽、求助、征友、无聊发疯、深夜emo、晒日常
+- 每条帖子的 hidden 字段写隐藏描述（发帖人的真实状态和发帖动机）
+- 高互动帖可附带 hotComments 数组（每条含 name 和 text）
+- 投票帖可加 poll 对象（含 options 数组和 totalVotes）
+- 正文口语化、随意
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 示例
+<mlife_app>
+{
+  "page": "chat",
+  "data": {
+    "posts": [
+      {
+        "hidden": "一个Lv3男用户凌晨三点睡不着发的无聊帖，纯粹想找人说话，评论区几个夜猫子在接龙",
+        "avatar": "🦉",
+        "nick": "失眠选手",
+        "level": "Lv3",
+        "vip": "无",
+        "time": "03:17",
+        "title": "现在还醒着的都是什么人 报个到",
+        "body": "现在还醒着的都是什么人 报个到",
+        "replies": 124,
+        "views": 456,
+        "likes": 56,
+        "hotComments": [
+          {"name": "夜班护士本人", "text": "刚给病人换完药 累死了"},
+          {"name": "代码写不完", "text": "deadline明天 还有三个bug没修"},
+          {"name": "分手第七天", "text": "别问"}
+        ]
+      }
+    ]
+  }
+}
+</mlife_app>
+</UI模板_闲聊灌水>

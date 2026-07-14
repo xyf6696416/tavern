@@ -1,0 +1,54 @@
+<UI模板_黑金之选_发布招募>
+** 当{{user}}点击"发布招募"时，输出发布招募表单界面。
+** 用一对<mlife_app>标签包裹，JSON格式。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "recruit_post",
+  "data": {
+    "form": {
+      "titleHint": "例：寻找长期固定伴侣",
+      "budgetHint": "例：8000M币/次",
+      "tagsHint": "例：长期,固定,陪伴,旅行",
+      "bodyHint": "描述你的要求...包括对对方的要求、时间安排、地点、频率、注意事项等"
+    }
+  }
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 每个 <mlife_app> 标签对应一个发布表单
+- 表单包含以下字段：
+  - titleHint：招募标题的占位提示
+  - budgetHint：预算的占位提示
+  - tagsHint：标签的占位提示（逗号分隔）
+  - bodyHint：详细要求的占位提示
+- 在正文中引导{{user}}填写内容，{{user}}提供完整信息后，AI生成正式的招募帖
+- 招募帖发布成功后，{{user}}可以在"我的管理"中查看
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 示例
+<mlife_app>
+{
+  "page": "recruit_post",
+  "data": {
+    "form": {
+      "titleHint": "例：周末约会女伴",
+      "budgetHint": "例：5000M币/次",
+      "tagsHint": "例：短期,周末,约会,陪伴",
+      "bodyHint": "例：想找一个周末能一起吃饭逛街看电影的女生，性格开朗聊得来就行。每次5000M币，时间灵活，安全第一，互相尊重隐私"
+    }
+  }
+}
+</mlife_app>
+
+# 发布流程
+1. AI输出发布表单，展示占位提示
+2. {{user}}在正文中说明招募内容（标题、预算、标签、详情）
+3. AI生成正式招募帖并返回招募广场页面
+4. 招募帖发布后，在"我的管理"中可见
+</UI模板_黑金之选_发布招募>

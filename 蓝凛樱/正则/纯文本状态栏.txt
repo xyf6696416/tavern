@@ -1,0 +1,67 @@
+<details><summary>状态栏</summary>
+<%
+if (runType == 'render')
+{
+    function SafeGetValue(value, defaultValue = "") {
+        // 如果值不存在，返回默认值
+        if (value === undefined || value === null) {
+            return defaultValue;
+        }
+        // 如果是数组，取第一个元素
+        if (Array.isArray(value)) {
+            return value.length !== 0 ? value[0] : defaultValue;
+        }
+        // 否则直接返回值本身
+        return value;
+    }
+const data = window.TavernHelper.getVariables({type: 'message', message_id: message_id});
+const msg_data = data.display_data;
+//上面是固定写法，不用管，不要改
+
+const worldWeekdayRaw = SafeGetValue(msg_data?.['世界']?.['星期几'], '--');
+let worldWeekdayDisplay = worldWeekdayRaw;
+const weekdayMap = { "一": "星期一", "二": "星期二", "三": "星期三", "四": "星期四", "五": "星期五", "六": "星期六", "日": "星期日" };
+if (weekdayMap[worldWeekdayRaw]) {
+    worldWeekdayDisplay = weekdayMap[worldWeekdayRaw];
+}
+ %>
+世界日期: <%- SafeGetValue(msg_data?.['世界']?.['日期']) %><br>
+星期: <%- worldWeekdayDisplay %><br>
+世界时间: <%- SafeGetValue(msg_data?.['世界']?.['时间']) %><br>
+天气: <%- SafeGetValue(msg_data?.['世界']?.['天气图标']) %><br>
+<br>
+--- 柚木凛 ---<br>
+好感度: <%- SafeGetValue(msg_data?.['柚木凛']?.['好感度']?.['对{{user}}']) %><br>
+对晴人厌烦度: <%- SafeGetValue(msg_data?.['柚木凛']?.['厌烦度']?.['对秋山晴人']) %><br>
+理想恋人: <%- SafeGetValue(msg_data?.['柚木凛']?.['理想恋人']) %><br>
+穿着: <%- SafeGetValue(msg_data?.['柚木凛']?.['穿着']) %><br>
+位置: <%- SafeGetValue(msg_data?.['柚木凛']?.['当前位置']) %><br>
+梦游: <%- SafeGetValue(msg_data?.['柚木凛']?.['梦游状态']) %><br>
+性事: <%- SafeGetValue(msg_data?.['柚木凛']?.['性事记录']) %><br>
+姿态: <%- SafeGetValue(msg_data?.['柚木凛']?.['体位动作']) %><br>
+<br>
+--- 秋山蓝 ---<br>
+好感度: <%- SafeGetValue(msg_data?.['秋山蓝']?.['好感度']?.['对{{user}}']) %><br>
+对晴人厌烦度: <%- SafeGetValue(msg_data?.['秋山蓝']?.['厌烦度']?.['对秋山晴人']) %><br>
+穿着: <%- SafeGetValue(msg_data?.['秋山蓝']?.['穿着']) %><br>
+位置: <%- SafeGetValue(msg_data?.['秋山蓝']?.['当前位置']) %><br>
+倾向: <%- SafeGetValue(msg_data?.['秋山蓝']?.['行为倾向']) %><br>
+性事: <%- SafeGetValue(msg_data?.['秋山蓝']?.['性事记录']) %><br>
+姿态: <%- SafeGetValue(msg_data?.['秋山蓝']?.['体位动作']) %><br>
+<br>
+--- 神原樱 ---<br>
+好感度: <%- SafeGetValue(msg_data?.['神原樱']?.['好感度']?.['对{{user}}']) %><br>
+对晴人厌烦度: <%- SafeGetValue(msg_data?.['神原樱']?.['厌烦度']?.['对秋山晴人']) %><br>
+穿着: <%- SafeGetValue(msg_data?.['神原樱']?.['穿着']) %><br>
+位置: <%- SafeGetValue(msg_data?.['神原樱']?.['当前位置']) %><br>
+性事: <%- SafeGetValue(msg_data?.['神原樱']?.['性事记录']) %><br>
+夫妻关系: <%- SafeGetValue(msg_data?.['神原樱']?.['自认夫妻关系']) %><br>
+姿态: <%- SafeGetValue(msg_data?.['神原樱']?.['体位动作']) %><br>
+<br>
+--- 秋山晴人 ---<br>
+绿帽值: <%- SafeGetValue(msg_data?.['秋山晴人']?.['状态']?.['绿帽值']) %><br>
+位置: <%- SafeGetValue(msg_data?.['秋山晴人']?.['当前位置']) %><br>
+动作: <%- SafeGetValue(msg_data?.['秋山晴人']?.['当前动作']) %><br>
+幻想: <%- SafeGetValue(msg_data?.['秋山晴人']?.['当前幻想']) %><br>
+心理: <%- SafeGetValue(msg_data?.['秋山晴人']?.['当前心理状态']) %><br>
+<% } %></details>

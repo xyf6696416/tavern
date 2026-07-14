@@ -1,0 +1,141 @@
+<UI模板_黑金之选_我的管理>
+** 当{{user}}点击"我的管理"或查看自己的招募记录时，按以下格式输出。
+** 用一对<mlife_app>标签包裹，JSON格式。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "recruit_manage",
+  "data": {
+    "tab": "我发布的",
+    "myRecruits": [
+      {
+        "hidden": "隐藏描述：这条招募的真实进展、当前状态补充说明等",
+        "title": "寻找固定伴侣",
+        "status": "招募中",
+        "applicants": 3,
+        "code": "R001",
+        "time": "2天前"
+      },
+      {
+        "hidden": "已找到合适人选，对方确认后关闭了招募",
+        "title": "周末约饭搭子",
+        "status": "已完成",
+        "applicants": 8,
+        "code": "R002",
+        "time": "2周前"
+      }
+    ],
+    "myApplications": [
+      {
+        "hidden": "隐藏描述：应征的动机、状态细节等",
+        "title": "XX的招募",
+        "poster": "发布人昵称",
+        "status": "已报名",
+        "code": "R003",
+        "time": "1天前"
+      },
+      {
+        "hidden": "对方已选中其他人",
+        "title": "XX的出差陪同招募",
+        "poster": "发布人昵称",
+        "status": "未选中",
+        "code": "R004",
+        "time": "5天前"
+      }
+    ]
+  }
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 每个 <mlife_app> 标签对应一个管理页面
+- tab 字段：当前选中的标签页，"我发布的"或"我报名的"
+- myRecruits 数组：我发布的招募列表（当 tab 为"我发布的"时展示），每条包含：
+  - hidden：隐藏描述（真实进展、补充信息等），不显示在界面上
+  - title：招募标题
+  - status：招募中/已锁定/已完成/已取消
+  - applicants：报名人数（可选）
+  - code：招募编号
+  - time：发布时间
+- myApplications 数组：我报名的招募列表（当 tab 为"我报名的"时展示），每条包含：
+  - hidden：隐藏描述（应征动机、状态细节等），不显示在界面上
+  - title：招募标题
+  - poster：发布人昵称
+  - status：已报名/已确认/未选中/已完成/已取消
+  - code：招募编号
+  - time：报名时间
+- 可在正文中多次出现，正文叙述穿插在标签之间
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 示例
+<mlife_app>
+{
+  "page": "recruit_manage",
+  "data": {
+    "tab": "我发布的",
+    "myRecruits": [
+      {
+        "hidden": "发了两天，收到了5个报名，筛选中有2个条件不错正在聊",
+        "title": "寻找长期固定伴侣 周末陪伴为主",
+        "status": "招募中",
+        "applicants": 5,
+        "code": "R001",
+        "time": "2天前"
+      },
+      {
+        "hidden": "上次出差找的临时伴侣，体验很好，已关闭招募",
+        "title": "深圳出差两天陪同",
+        "status": "已完成",
+        "applicants": 12,
+        "code": "R002",
+        "time": "2周前"
+      }
+    ],
+    "myApplications": [
+      {
+        "hidden": "看对方条件不错，预算也给得高，主动报名了",
+        "title": "找有经验的女王 私密长期",
+        "poster": "新贵玩家",
+        "status": "已报名",
+        "code": "R003",
+        "time": "1天前"
+      }
+    ]
+  }
+}
+</mlife_app>
+
+# 切换标签示例
+当{{user}}说"看我报名的"时：
+<mlife_app>
+{
+  "page": "recruit_manage",
+  "data": {
+    "tab": "我报名的",
+    "myRecruits": [],
+    "myApplications": [
+      {
+        "hidden": "报名后对方还没审核，正在等",
+        "title": "寻找长期固定伴侣 周末陪伴为主",
+        "poster": "华尔街之狼",
+        "status": "已报名",
+        "code": "R001",
+        "time": "昨天"
+      },
+      {
+        "hidden": "对方已选到其他人了",
+        "title": "下周三出差深圳找陪同",
+        "poster": "地产大亨",
+        "status": "未选中",
+        "code": "R002",
+        "time": "3天前"
+      }
+    ]
+  }
+}
+</mlife_app>
+</UI模板_黑金之选_我的管理>

@@ -1,0 +1,12 @@
+```text
+<body>
+<h1 style="color: #FF0000;">如果你长时间可以看到我,说明一定出现什么了问题...</h1>
+<h1 style="color: #FF0000;">嗯...首先，你装酒馆助手了吗？或者说关掉了渲染？</h1>
+<h1 style="color: #FF0000;">如果都有的话....打开你的控制台！一定有什么 Error 出现了！</h1>
+<h1 style="color: #FF0000;">比如说...500？说明你该挂梯子了！</h1>
+<h1 style="color: #FF0000;">要不然...就是你的浏览器不兼容？酒馆助手升级到最新版本了吗？酒馆升级了吗！</h1>
+
+  <script>        $('body').load('http://localhost:5501/dd')
+  </script>
+</body>
+```

@@ -1,0 +1,60 @@
+<UI模板_个人中心>
+** 当{{user}}正在浏览个人中心/我的主页时，AI输出个人中心界面。
+** 用一对<mlife_app>标签包裹，JSON格式。
+** 正则会自动将标签内容渲染为个人中心界面。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "profile",
+  "data": {
+    "hidden": "当前用户的真实状态描述",
+    "avatar": "emoji头像",
+    "nick": "用户昵称",
+    "level": "Lv1-Lv5",
+    "vip": "无/白银/黄金/黑金",
+    "age": 数字,
+    "bio": "个人简介，一句话口语化",
+    "stats": {
+      "following": 数字,
+      "followers": 数字,
+      "likes": 数字,
+      "posts": 数字
+    },
+    "sections": [
+      {"id": "selfie", "name": "日常自拍", "icon": "📸", "locked": false},
+      {"id": "chat", "name": "闲聊灌水", "icon": "💬", "locked": false},
+      {"id": "resource", "name": "资源分享", "icon": "📦", "locked": false},
+      {"id": "goddess", "name": "女神夜话", "icon": "👑", "locked": false},
+      {"id": "recruit_list", "name": "黑金之选", "icon": "💎", "locked": true/false}
+    ],
+    "settings": {
+      "showCheckin": true,
+      "checkedIn": false,
+      "streakDays": 数字
+    }
+  }
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 这是M-life的个人中心/我的主页界面，显示用户资料、社交统计、板块导航
+- avatar: 用户头像 emoji
+- level: 用户等级 Lv1-Lv5
+- vip: 无/白银/黄金/黑金，影响黑金之选入口是否解锁
+- bio: 用户个人简介，口语化一句话
+- stats: 社交统计数据（关注数、粉丝数、获赞数、帖子数）
+- sections: 板块导航列表，每个板块可点击进入对应页面
+  - 非黑金VIP用户，黑金之选入口显示 locked: true
+  - 黑金VIP用户，黑金之选入口显示 locked: false
+- settings: 设置信息，签到状态等
+- hidden: 写当前用户的真实状态描述，不显示在界面上
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 触发条件
+- {{user}}点击底部导航栏"我的"按钮时自动输出
+- {{user}}说"个人中心"、"我的主页"、"个人主页"等关键词时输出
+</UI模板_个人中心>

@@ -1,0 +1,95 @@
+<UI模板_黑金之选_招募广场>
+** 当{{user}}正在浏览黑金之选招募广场时，必须严格按以下格式输出。每次展示3-5条招募帖。
+** 黑金之选是高端的付费招募平台，用户发布招募帖寻找伴侣/玩伴，设定预算和要求。
+** 用一对<mlife_app>标签包裹，JSON格式。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "recruit_list",
+  "data": {
+    "recruits": [
+      {
+        "hidden": "隐藏描述：发布人的真实状态、动机、背景、是否靠谱等",
+        "code": "R001",
+        "title": "寻找长期固定伴侣",
+        "poster": "黑金用户A",
+        "avatar": "💎",
+        "budget": "5000M币/次",
+        "tags": ["长期", "固定", "互惠"],
+        "status": "招募中",
+        "applicants": 3,
+        "time": "2小时前"
+      }
+    ]
+  },
+  "badges": {"home":0,"match":0,"live":0,"dm":0,"profile":0}
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+- 每次在 data.recruits 中包含3-5条招募帖，等待{{user}}操作
+- 每条 recruit 的 hidden 字段写隐藏描述（发布人的真实状态、动机、经济条件、是否靠谱等），不显示在界面上
+- code 字段：招募编号，唯一标识（R001, R002 等）
+- title 字段：招募标题，吸引眼球（如"周末约会女伴"、"找长期固定伴侣"、"出差找个陪伴"）
+- poster 字段：发布人昵称
+- avatar 字段：头像 emoji，建议使用高级感符号（💎👑🌟💫🌙等）
+- budget 字段：预算，格式为"XXXXM币/次"或"XXXXM币/月"
+- tags 数组：标签，如长期、短期、固定、互惠、SM、角色扮演、旅行、出差、商务、陪同等
+- status 字段：招募中/已锁定/已完成/已取消
+- applicants 字段：报名人数
+- time 字段：发布时间，如"2小时前"、"昨天"、"3天前"
+- 招募帖风格要高端、精致，配得上黑金VIP的档次
+- 严禁使用 thinking、<thinking>、<content>标签
+- 闭合标签后禁止输出其他内容
+
+# 示例
+<mlife_app>
+{
+  "page": "recruit_list",
+  "data": {
+    "recruits": [
+      {
+        "hidden": "35岁金融男，黑金VIP续费三年，出手大方，上一任固定伴侣因搬家分手，找长期关系",
+        "code": "R001",
+        "title": "寻找长期固定伴侣 周末陪伴为主",
+        "poster": "华尔街之狼",
+        "avatar": "💎",
+        "budget": "8000M币/次",
+        "tags": ["长期", "固定", "陪伴", "旅行"],
+        "status": "招募中",
+        "applicants": 7,
+        "time": "1小时前"
+      },
+      {
+        "hidden": "42岁房地产老板，已婚但常出差，在各个城市找临时伴侣，要求高但给钱痛快",
+        "code": "R002",
+        "title": "下周三出差深圳 找两天陪同",
+        "poster": "地产大亨",
+        "avatar": "🏰",
+        "budget": "15000M币/天",
+        "tags": ["短期", "出差", "陪同", "商务"],
+        "status": "招募中",
+        "applicants": 12,
+        "time": "3小时前"
+      },
+      {
+        "hidden": "28岁创业新贵，刚拿到B轮融资，想体验SM关系，但经验不足所以比较谨慎",
+        "code": "R003",
+        "title": "找有经验的女王 私密长期",
+        "poster": "新贵玩家",
+        "avatar": "👑",
+        "budget": "10000M币/次",
+        "tags": ["SM", "长期", "私密", "角色扮演"],
+        "status": "招募中",
+        "applicants": 5,
+        "time": "昨天"
+      }
+    ]
+  },
+  "badges": {"home":0,"match":0,"live":0,"dm":0,"profile":0}
+}
+</mlife_app>
+</UI模板_黑金之选_招募广场>

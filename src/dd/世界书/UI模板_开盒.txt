@@ -1,0 +1,190 @@
+<UI模板_开盒>
+** 当{{user}}触发开盒操作时，AI输出此模板。
+** 用一对<mlife_app>标签包裹。
+
+<FORMAT_RULE>
+Format:
+<mlife_app>
+{
+  "page": "unbox",
+  "data": {
+    "contact": "对方昵称",
+    "avatar": "头像emoji",
+    "level": "LvX",
+    "vip": "VIP类型",
+    "hasCharacter": true,
+    "isUnboxed": false,
+    "balance": "500",
+    "character": {
+      "id": "char_001",
+      "nick": "对方昵称",
+      "age": 0,
+      "job": "",
+      "level": "LvX",
+      "vip": "",
+      "purpose": "",
+      "registered": "",
+      "bodyType": "",
+      "height": "",
+      "faceStyle": "",
+      "features": "",
+      "dailyStyle": "",
+      "dateStyle": "",
+      "lingerie": "",
+      "homeStyle": "",
+      "personality_drive": "",
+      "personality_main": [],
+      "personality_contrast": "",
+      "chat_style": "",
+      "chat_pace": "",
+      "chat_initiative": "",
+      "chat_drive": "",
+      "meet_first": "",
+      "meet_real": "",
+      "meet_pace": "",
+      "bust": "",
+      "waist": "",
+      "hip": "",
+      "pubic": "",
+      "inner": "",
+      "sensitive": [],
+      "nsfw_drive": "",
+      "nsfw_style": "",
+      "nsfw_voice": "",
+      "nsfw_dirty_talk": "",
+      "nsfw_likes": [],
+      "nsfw_limits": [],
+      "nsfw_orgasm": "",
+      "created_at": ""
+    }
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+</FORMAT_RULE>
+
+# 规则
+1. isUnboxed=false 时：检查用户 M币余额 >= 100
+   - 余额充足：显示付费墙，引导用户确认支付
+   - 余额不足：显示余额不足提示，引导充值
+2. isUnboxed=true 时：展示角色全部数据，包含所有50+字段
+3. 展示数据时，按分组排列：
+   - 基本信息（nick, age, job, level, vip, purpose, registered）
+   - 外表信息（bodyType, height, faceStyle, features, dailyStyle, dateStyle, lingerie, homeStyle）
+   - 性格调色盘（personality_drive, personality_main, personality_contrast）
+   - 聊天风格（chat_style, chat_pace, chat_initiative, chat_drive）
+   - 见面风格（meet_first, meet_real, meet_pace）
+   - 身体数据（bust, waist, hip, pubic, inner, sensitive）
+   - NSFW信息（nsfw_drive, nsfw_style, nsfw_voice, nsfw_dirty_talk, nsfw_likes, nsfw_limits, nsfw_orgasm）
+4. 不允许使用thinking标签
+5. 如果角色数据不存在，输出 { "page": "unbox", "data": { "contact": "", "hasCharacter": false } }
+
+# 示例 - 已开盒
+<mlife_app>
+{
+  "page": "unbox",
+  "data": {
+    "contact": "蜜桃气泡水",
+    "avatar": "🍑",
+    "level": "Lv3",
+    "vip": "黄金",
+    "hasCharacter": true,
+    "isUnboxed": true,
+    "balance": "400",
+    "character": {
+      "id": "char_001",
+      "nick": "蜜桃气泡水",
+      "age": 24,
+      "job": "舞蹈老师",
+      "level": "Lv3",
+      "vip": "黄金",
+      "purpose": "找长期关系",
+      "registered": "老用户（三个月以上）",
+      "bodyType": "匀称型",
+      "height": "165cm",
+      "faceStyle": "甜美型",
+      "features": "黑长直，皮肤白嫩，锁骨明显",
+      "dailyStyle": "韩系风：针织开衫、百褶裙",
+      "dateStyle": "性感型：低领、短裙",
+      "lingerie": "性感型：蕾丝成套",
+      "homeStyle": "睡衣党",
+      "personality_drive": "害怕孤独",
+      "personality_main": ["温柔体贴", "开朗健谈"],
+      "personality_contrast": "外热内冷",
+      "chat_style": "句尾加波浪线~，口语化",
+      "chat_pace": "看心情型",
+      "chat_initiative": "试探型",
+      "chat_drive": "闷骚型慢热",
+      "meet_first": "自然型",
+      "meet_real": "一致型",
+      "meet_pace": "看感觉型",
+      "bust": "C杯",
+      "waist": "盈盈一握",
+      "hip": "蜜桃臀",
+      "pubic": "粉嫩，阴毛修剪过",
+      "inner": "紧致，深处敏感",
+      "sensitive": ["脖颈", "乳头"],
+      "nsfw_drive": "情感需求",
+      "nsfw_style": "羞涩但投入型",
+      "nsfw_voice": "自然型",
+      "nsfw_dirty_talk": "不说型",
+      "nsfw_likes": ["后入", "接吻"],
+      "nsfw_limits": ["肛交"],
+      "nsfw_orgasm": "痉挛型",
+      "created_at": "2025年9月15日"
+    }
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+
+# 示例 - 未开盒（余额充足）
+<mlife_app>
+{
+  "page": "unbox",
+  "data": {
+    "contact": "蜜桃气泡水",
+    "avatar": "🍑",
+    "level": "Lv3",
+    "vip": "黄金",
+    "hasCharacter": true,
+    "isUnboxed": false,
+    "balance": "500",
+    "character": {
+      "id": "char_001",
+      "nick": "蜜桃气泡水",
+      "age": 24,
+      "job": "舞蹈老师",
+      "level": "Lv3",
+      "vip": "黄金"
+    }
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+
+# 示例 - 未开盒（余额不足）
+<mlife_app>
+{
+  "page": "unbox",
+  "data": {
+    "contact": "蜜桃气泡水",
+    "avatar": "🍑",
+    "level": "Lv3",
+    "vip": "黄金",
+    "hasCharacter": true,
+    "isUnboxed": false,
+    "balance": "30",
+    "character": {
+      "id": "char_001",
+      "nick": "蜜桃气泡水",
+      "age": 24,
+      "job": "舞蹈老师",
+      "level": "Lv3",
+      "vip": "黄金"
+    }
+  },
+  "badges": {"dm": 0}
+}
+</mlife_app>
+</UI模板_开盒>

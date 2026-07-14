@@ -1,0 +1,13 @@
+<style>
+/* 在这里写你的CSS样式 */
+.status-bar {
+  font-size: 14px;
+  color: #ff69b4;
+  border: 1px solid #ff69b4;
+  padding: 5px;
+  border-radius: 8px;
+}
+</style>
+<div class="status-bar">
+💖 白娅当前依存度: {{format_message_variable::stat_data.白娅.依存度}}
+</div>
