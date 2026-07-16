@@ -1,0 +1,218 @@
+```html
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>魔物娘堡垒2.0 - 创建角色</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--c-bg-dark:#1a0f1e;--c-bg-card:#2d1b3d;--c-bg-elevated:#3d2450;--c-border:#5a3a6e;--c-border-bright:#8b5cf6;--c-gold:#d4a843;--c-gold-dim:#b8860b;--c-purple:#7c3aed;--c-text-primary:#f0e6d3;--c-text-secondary:#a89b8a;--c-text-muted:#6b5e4e;--font-display:'Georgia','Times New Roman',serif;--font-body:'Segoe UI','Microsoft YaHei',sans-serif}
+body{font-family:var(--font-body);color:var(--c-text-primary);background:transparent;font-size:14px;line-height:1.4;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:10px}
+.create-screen{width:100%;max-width:760px;margin:0 auto;background:linear-gradient(180deg,#1a0f1e 0%,#0d0710 50%,#1a0f1e 100%);border:2px solid var(--c-border);box-shadow:0 0 30px rgba(139,92,246,.15),inset 0 0 80px rgba(0,0,0,.5);overflow:hidden;position:relative;min-height:550px}
+.bg-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.glow-orb{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;z-index:0}
+.glow-orb-1{width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.12),transparent);top:-80px;right:-80px;animation:orbFloat1 8s ease-in-out infinite}
+.glow-orb-2{width:250px;height:250px;background:radial-gradient(circle,rgba(212,168,67,.08),transparent);bottom:-60px;left:-60px;animation:orbFloat2 10s ease-in-out infinite}
+@keyframes orbFloat1{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(-30px,30px)scale(1.1)}66%{transform:translate(20px,50px)scale(0.9)}}
+@keyframes orbFloat2{0%,100%{transform:translate(0,0)scale(1)}33%{transform:translate(30px,-20px)scale(1.15)}66%{transform:translate(-20px,-40px)scale(0.85)}}
+.create-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding:20px;gap:10px;width:100%}
+.ornament-row{display:flex;align-items:center;gap:8px}
+.orn-sym{color:var(--c-gold-dim);font-size:14px;animation:ornPulse 2s ease-in-out infinite}
+.orn-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--c-gold-dim),transparent)}
+@keyframes ornPulse{0%,100%{opacity:.6}50%{opacity:1}}
+.step-indicator{display:flex;align-items:center;gap:0;position:relative;width:200px;height:24px;margin:4px 0}
+.step-track{position:absolute;top:50%;left:12px;right:12px;height:2px;background:var(--c-border);z-index:0}
+.step-track-fill{position:absolute;top:50%;left:12px;height:2px;background:var(--c-gold-dim);z-index:0;transition:width .4s ease}
+.step-dot{position:relative;z-index:1;width:24px;height:24px;border-radius:50%;background:var(--c-bg-dark);border:2px solid var(--c-border);display:flex;align-items:center;justify-content:center;margin:0 auto;transition:all .3s}
+.step-dot.active{border-color:var(--c-gold);background:var(--c-bg-elevated);box-shadow:0 0 8px rgba(212,168,67,.3)}
+.step-dot.done{border-color:var(--c-gold-dim);background:var(--c-gold-dim)}
+.step-num{font-size:11px;font-weight:bold;color:var(--c-text-muted)}
+.step-dot.active .step-num{color:var(--c-gold)}
+.step-dot.done .step-num{color:#1a0f1e}
+.step-panel{width:100%;max-width:600px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 0}
+.step-title{font-family:var(--font-display);font-size:20px;color:var(--c-gold);letter-spacing:3px;text-shadow:0 0 15px rgba(212,168,67,.3);text-align:center}
+.step-desc{font-size:12px;color:var(--c-text-secondary);text-align:center;font-style:italic;margin-bottom:4px}
+.section-label{font-size:11px;color:var(--c-text-muted);text-transform:uppercase;letter-spacing:2px;align-self:flex-start;margin-bottom:2px;width:100%}
+.card-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%}
+.pick-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 16px;background:rgba(0,0,0,.2);border:2px solid var(--c-border);cursor:pointer;transition:all .2s;font-family:var(--font-body);min-width:100px;flex:1;color:var(--c-text-primary)}
+.pick-card:hover{border-color:var(--c-border-bright);background:rgba(139,92,246,.1)}
+.pick-card.selected{border-color:var(--c-gold);background:rgba(212,168,67,.1);box-shadow:0 0 12px rgba(212,168,67,.2)}
+.pick-sm{padding:10px 12px;min-width:80px}
+.pick-icon{font-size:24px}
+.pick-label{font-size:12px;color:var(--c-text-primary);font-weight:bold;text-align:center;white-space:pre-line;line-height:1.3}
+.location-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;width:100%}
+.pick-loc{padding:8px;min-width:0;flex-direction:row;flex-wrap:wrap;gap:4px;color:var(--c-text-primary)}
+.loc-icon{font-size:16px}
+.loc-name{font-size:11px;font-weight:bold;flex:1;text-align:left}
+.loc-tag{font-size:9px;padding:1px 4px;border-radius:2px;font-weight:bold}
+.loc-tag.safe{background:rgba(34,197,94,.2);color:#4ade80;border:1px solid #22c55e}
+.loc-tag.pseudo{background:rgba(234,179,8,.2);color:#eab308;border:1px solid #eab308}
+.loc-tag.danger{background:rgba(220,38,38,.2);color:#f87171;border:1px solid #dc2626}
+.loc-tag.special{background:rgba(168,85,247,.2);color:#c084fc;border:1px solid #a855f7}
+.btn-next{margin-top:10px;padding:8px 24px;border:2px solid var(--c-gold-dim);background:transparent;color:var(--c-gold);font-family:var(--font-display);font-size:14px;cursor:pointer;transition:all .2s;letter-spacing:2px;width:100%;max-width:300px;text-align:center}
+.btn-next:hover:not(:disabled){background:rgba(212,168,67,.1);border-color:var(--c-gold);box-shadow:0 0 12px rgba(212,168,67,.2)}
+.btn-next:disabled{opacity:.3;cursor:not-allowed}
+.tag-grid{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;width:100%}
+.tag-btn{padding:5px 10px;font-size:11px;border:1px solid var(--c-border);background:rgba(0,0,0,.15);color:var(--c-text-secondary);cursor:pointer;transition:all .2s;font-family:var(--font-body);border-radius:2px}
+.tag-btn:hover{border-color:var(--c-border-bright);color:var(--c-text-primary)}
+.tag-btn.selected{border-color:var(--c-purple);background:rgba(139,92,246,.2);color:var(--c-text-primary)}
+.confirm-panel{width:100%;max-width:400px;margin-top:8px;background:rgba(0,0,0,.25);border:1px solid var(--c-border);padding:12px}
+.confirm-title{font-family:var(--font-display);font-size:13px;color:var(--c-gold);text-align:center;letter-spacing:2px;margin-bottom:8px}
+.confirm-grid{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.cf-row{display:flex;padding:4px 8px;background:rgba(0,0,0,.15);font-size:12px}
+.cf-label{color:var(--c-text-muted);min-width:50px;letter-spacing:1px}
+.cf-val{flex:1;text-align:right;color:var(--c-text-primary);font-weight:bold}
+.btn-commit{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px;border:2px solid var(--c-gold-dim);background:linear-gradient(135deg,rgba(212,168,67,.1),rgba(212,168,67,.05));cursor:pointer;transition:all .3s;font-family:var(--font-display);color:var(--c-gold)}
+.btn-commit:hover:not(:disabled){border-color:var(--c-gold);background:linear-gradient(135deg,rgba(212,168,67,.2),rgba(212,168,67,.1));box-shadow:0 0 15px rgba(212,168,67,.2)}
+.btn-commit:disabled{opacity:.3;cursor:not-allowed}
+.commit-icon{color:var(--c-gold-dim);font-size:14px}
+.commit-label{font-size:16px;letter-spacing:4px;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="create-screen">
+  <canvas class="bg-canvas" id="bgCanvas"></canvas>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="create-content">
+    <div class="ornament-row"><span class="orn-sym">⬥</span><span class="orn-line"></span><span class="orn-sym">⬥</span><span class="orn-line"></span><span class="orn-sym">⬥</span></div>
+    <div class="step-indicator" id="stepIndicator">
+      <div class="step-track" style="width:calc(100% - 24px)"></div>
+      <div class="step-track-fill" id="stepTrackFill" style="width:0%"></div>
+      <div class="step-dot active" id="sd0"><span class="step-num">1</span></div>
+      <div class="step-dot" id="sd1"><span class="step-num">2</span></div>
+      <div class="step-dot" id="sd2"><span class="step-num">3</span></div>
+      <div class="step-dot" id="sd3"><span class="step-num">4</span></div>
+    </div>
+    <div id="stepPanel" class="step-panel"></div>
+    <div class="ornament-row" style="margin-top:8px"><span class="orn-sym">⬥</span><span class="orn-line"></span><span class="orn-sym">⬥</span><span class="orn-line"></span><span class="orn-sym">⬥</span></div>
+  </div>
+</div>
+<script>
+(function(){
+var step=0,form={性别:'',种族:'',职业:'',开局:'',地点:'',韵律:[]};
+var genders=[{icon:'🚹',label:'男性',value:'男'},{icon:'🚺',label:'女性',value:'女'},{icon:'⚧️',label:'扶她',value:'扶她'}];
+var races=[{icon:'🧑',label:'人类',value:'人类'},{icon:'🧝',label:'精灵',value:'精灵'},{icon:'🕊️',label:'光明魔物娘',value:'光明魔物娘'}];
+var jobs=[{icon:'⚔️',label:'战士类',value:'战士类'},{icon:'🔮',label:'法师类',value:'法师类'},{icon:'🏹',label:'猎魔人',value:'猎魔人'},{icon:'👑',label:'政客',value:'政客'}];
+var starts=[{icon:'🌱',label:'贫瘠开局',value:'贫瘠',lv:1,money:200,power:10},{icon:'📖',label:'普通开局',value:'普通',lv:10,money:500,power:50},{icon:'💰',label:'豪华开局',value:'豪华',lv:20,money:2000,power:150},{icon:'🔥',label:'传奇开局',value:'传奇',lv:30,money:5000,power:300}];
+var locations=[{icon:'⛪',label:'安全区',value:'安全区',tag:'安全',cls:'safe'},{icon:'🏛️',label:'诺亚之心广场',value:'诺亚之心广场',tag:'安全',cls:'safe'},{icon:'🌙',label:'月隐神社',value:'月隐神社',tag:'中立',cls:'pseudo'},{icon:'🍷',label:'红月酒吧',value:'红月酒吧',tag:'危险',cls:'danger'},{icon:'🏥',label:'诺亚医院',value:'诺亚医院',tag:'危险',cls:'danger'},{icon:'🕯️',label:'光明神殿',value:'光明神殿',tag:'中立',cls:'pseudo'},{icon:'🌹',label:'魅魔之巢',value:'魅魔之巢',tag:'危险',cls:'danger'},{icon:'🏠',label:'温暖之家',value:'温暖之家',tag:'危险',cls:'danger'},{icon:'🌿',label:'迷失乐园',value:'迷失乐园',tag:'危险',cls:'danger'},{icon:'💧',label:'欲望下水道',value:'欲望下水道',tag:'危险',cls:'danger'},{icon:'🏚️',label:'恶魔公馆',value:'恶魔公馆',tag:'危险',cls:'danger'},{icon:'🌾',label:'丰饶牧场',value:'丰饶牧场',tag:'危险',cls:'danger'},{icon:'🔬',label:'崩坏实验室',value:'崩坏实验室',tag:'危险',cls:'danger'},{icon:'🕸️',label:'堕落虫窟',value:'堕落虫窟',tag:'危险',cls:'danger'},{icon:'🎲',label:'随机地点',value:'随机',tag:'随机',cls:'special'}];
+var rhythms=['母性崇拜','足控','腋控','气味癖','虫类恐惧症','声音诱惑','触手亲和','巨物崇拜/恐惧','皮物迷恋','体液迷恋','催眠易感','疼痛爱好者','羞耻暴露癖','人偶化倾向','禁闭空间偏好','圣洁玷污欲','家畜化愿望','年龄倒退偏好','雌堕向往','灌肠/排泄控制','乳首开放','恋物癖','药物敏感'];
+
+function renderStep(){
+  var panel=document.getElementById('stepPanel');
+  panel.innerHTML='';
+  for(var i=0;i<4;i++){
+    var dot=document.getElementById('sd'+i);
+    dot.classList.remove('active','done');
+    if(i===step)dot.classList.add('active');
+    else if(i<step)dot.classList.add('done');
+  }
+  var fill=document.getElementById('stepTrackFill');
+  if(fill)fill.style.width=(step/3*100)+'%';
+  var html='';
+  switch(step){
+    case 0:html+=renderGender();break;
+    case 1:html+=renderRaceJob();break;
+    case 2:html+=renderStartLocation();break;
+    case 3:html+=renderRhythmConfirm();break;
+  }
+  panel.innerHTML=html;
+  bindEvents();
+}
+function renderGender(){
+  var h='<h2 class="step-title">选择你的性别</h2><p class="step-desc">一团光芒在你面前分裂，呈现出两种形态。</p><div class="card-row">';
+  genders.forEach(function(g,i){h+='<button class="pick-card'+(form.性别===g.value?' selected':'')+'" data-gender="'+i+'"><span class="pick-icon">'+g.icon+'</span><span class="pick-label">'+g.label+'</span></button>';});
+  h+='</div>';
+  return h;
+}
+function renderRaceJob(){
+  var h='<h2 class="step-title">种族与职业</h2><p class="step-desc">另一团光芒幻化出不同的影像。</p><div class="section-label">种族</div><div class="card-row" id="raceRow">';
+  races.forEach(function(r,i){h+='<button class="pick-card pick-sm'+(form.种族===r.value?' selected':'')+'" data-race="'+i+'"><span class="pick-icon">'+r.icon+'</span><span class="pick-label">'+r.label+'</span></button>';});
+  h+='</div><div class="section-label" style="margin-top:10px">职业</div><div class="card-row" id="jobRow">';
+  jobs.forEach(function(j,i){h+='<button class="pick-card pick-sm'+(form.职业===j.value?' selected':'')+'" data-job="'+i+'"><span class="pick-icon">'+j.icon+'</span><span class="pick-label">'+j.label+'</span></button>';});
+  h+='</div><button class="btn-next" id="nextBtn1" disabled>下一步 →</button>';
+  return h;
+}
+function renderStartLocation(){
+  var h='<h2 class="step-title">开局与降临</h2><p class="step-desc">一团光芒展现了你降临的起步与坐标。</p><div class="section-label">开局类型</div><div class="card-row" id="startRow">';
+  starts.forEach(function(s,i){h+='<button class="pick-card pick-sm'+(form.开局===s.value?' selected':'')+'" data-start="'+i+'"><span class="pick-icon">'+s.icon+'</span><span class="pick-label">'+s.label+'</span></button>';});
+  h+='</div><div class="section-label" style="margin-top:10px">降临地点</div><div class="location-grid" id="locGrid">';
+  locations.forEach(function(l,i){h+='<button class="pick-card pick-loc'+(form.地点===l.value?' selected':'')+'" data-loc="'+i+'"><span class="loc-icon">'+l.icon+'</span><span class="loc-name">'+l.label+'</span><span class="loc-tag '+l.cls+'">'+l.tag+'</span></button>';});
+  h+='</div><button class="btn-next" id="nextBtn2" disabled>下一步 →</button>';
+  return h;
+}
+function renderRhythmConfirm(){
+  var h='<h2 class="step-title">灵魂韵律</h2><p class="step-desc">"每个灵魂都有其独特的韵律…请选择与你共鸣的韵律。"</p><div class="tag-grid" id="rhythmGrid">';
+  rhythms.forEach(function(t,i){h+='<button class="tag-btn'+(form.韵律.indexOf(t)>=0?' selected':'')+'" data-rhythm="'+i+'">'+t+'</button>';});
+  h+='</div><div class="confirm-panel"><div class="confirm-title">确认角色设定</div><div class="confirm-grid">';
+  var pn='冒险者';
+  try{pn=window.parent&&window.parent.SillyTavern?window.parent.SillyTavern.name1:'冒险者'}catch(e){}
+  var st=starts.find(function(s){return s.value===form.开局});
+  h+='<div class="cf-row"><span class="cf-label">姓名</span><span class="cf-val">'+pn+'</span></div>';
+  h+='<div class="cf-row"><span class="cf-label">性别</span><span class="cf-val">'+form.性别+'</span></div>';
+  h+='<div class="cf-row"><span class="cf-label">种族</span><span class="cf-val">'+form.种族+'</span></div>';
+  h+='<div class="cf-row"><span class="cf-label">职业</span><span class="cf-val">'+form.职业+'</span></div>';
+  h+='<div class="cf-row"><span class="cf-label">开局</span><span class="cf-val">'+(st?st.label:'')+'（Lv.'+(st?st.lv:'')+'）</span></div>';
+  h+='<div class="cf-row"><span class="cf-label">降临</span><span class="cf-val">'+form.地点+'</span></div>';
+  h+='<div class="cf-row"><span class="cf-label">韵律</span><span class="cf-val">'+(form.韵律.length>0?form.韵律.join('、'):'无')+'</span></div>';
+  h+='</div><button class="btn-commit" id="commitBtn"><span class="commit-icon">⬥</span><span class="commit-label">降临诺亚之城</span><span class="commit-icon">⬥</span></button></div>';
+  return h;
+}
+function bindEvents(){
+  document.querySelectorAll('[data-gender]').forEach(function(el){
+    el.addEventListener('click',function(){form.性别=genders[this.dataset.gender].value;step=1;renderStep();});
+  });
+  document.querySelectorAll('[data-race]').forEach(function(el){
+    el.addEventListener('click',function(){form.种族=races[this.dataset.race].value;renderStep();});
+  });
+  document.querySelectorAll('[data-job]').forEach(function(el){
+    el.addEventListener('click',function(){form.职业=jobs[this.dataset.job].value;renderStep();});
+  });
+  document.querySelectorAll('[data-start]').forEach(function(el){
+    el.addEventListener('click',function(){form.开局=starts[this.dataset.start].value;renderStep();});
+  });
+  document.querySelectorAll('[data-loc]').forEach(function(el){
+    el.addEventListener('click',function(){form.地点=locations[this.dataset.loc].value;renderStep();});
+  });
+  document.querySelectorAll('[data-rhythm]').forEach(function(el){
+    el.addEventListener('click',function(){var t=rhythms[this.dataset.rhythm];var idx=form.韵律.indexOf(t);if(idx>=0)form.韵律.splice(idx,1);else form.韵律.push(t);renderStep();});
+  });
+  var nb1=document.getElementById('nextBtn1');if(nb1)nb1.addEventListener('click',function(){if(form.种族&&form.职业){step=2;renderStep();}});
+  var nb2=document.getElementById('nextBtn2');if(nb2)nb2.addEventListener('click',function(){if(form.开局&&form.地点){step=3;renderStep();}});
+  var cb=document.getElementById('commitBtn');if(cb)cb.addEventListener('click',confirmCreate);
+  if(nb1)nb1.disabled=!(form.种族&&form.职业);
+  if(nb2)nb2.disabled=!(form.开局&&form.地点);
+}
+function confirmCreate(){
+  var btn=document.getElementById('commitBtn');if(btn)btn.disabled=true;
+  var pn='冒险者';
+  try{pn=window.parent&&window.parent.SillyTavern?window.parent.SillyTavern.name1:'冒险者'}catch(e){}
+  var st=starts.find(function(s){return s.value===form.开局});
+  var summary='【角色设定确认】\n性别：'+form.性别+'\n种族：'+form.种族+'\n职业：'+form.职业+'\n阵营：光明\n等级：'+(st?st.lv:'')+' | 金钱：'+(st?st.money:'')+' | 战斗力：'+(st?st.power:'')+'\n韵律：'+(form.韵律.length>0?form.韵律.join('、'):'无')+'\n降临地点：'+form.地点+'\n\n请确认以上信息，输入"开始游戏"开启你的冒险！';
+  var w;try{w=window.parent||window}catch(e){w=window}
+  var ta=w.document.querySelector('#tavern_send_input, #send_textarea, textarea.send_textarea');
+  if(ta){ta.value=summary;var ev=new Event('input',{bubbles:true});ta.dispatchEvent(ev);}
+  setTimeout(function(){if(btn)btn.disabled=false;},2000);
+}
+var bgCanvas=document.getElementById('bgCanvas');
+if(bgCanvas){
+  var ctx=bgCanvas.getContext('2d');
+  (function(){var rs=function(){bgCanvas.width=bgCanvas.parentElement.clientWidth||760;bgCanvas.height=bgCanvas.parentElement.clientHeight||550;};rs();window.addEventListener('resize',rs);})();
+  var particles=[];
+  for(var i=0;i<40;i++)particles.push({x:Math.random()*bgCanvas.width,y:Math.random()*bgCanvas.height,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3,size:Math.random()*2+0.5,alpha:Math.random()*0.3+0.05,pulse:Math.random()*Math.PI*2});
+  (function draw(){
+    ctx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
+    particles.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;p.pulse+=0.015;
+      var a=p.alpha*(0.5+0.5*Math.sin(p.pulse));
+      if(p.x<0)p.x=bgCanvas.width;if(p.x>bgCanvas.width)p.x=0;if(p.y<0)p.y=bgCanvas.height;if(p.y>bgCanvas.height)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle='rgba(139,92,246,'+a+')';ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  })();
+}
+renderStep();
+})();
+</script>
+</body>
+```

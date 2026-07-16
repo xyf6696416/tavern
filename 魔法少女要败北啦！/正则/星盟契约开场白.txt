@@ -1,0 +1,1265 @@
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN" data-role="mahou" data-mode="good">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星盟契约 · 缔约书 v6 (双立场·深渊狩猎版)</title>
+<link rel="preconnect" href="https://gs.jurieo.com/gemini/fonts-googleapis">
+<link rel="preconnect" href="https://gs.jurieo.com/gemini/fonts-gstatic" crossorigin>
+<link href="https://gs.jurieo.com/gemini/fonts-googleapis/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ================================= */
+    /* 1. 善良态 —— 极光青金 (默认)      */
+    /* ================================= */
+    --ink:#070710;
+    --ink-2:#0c0d1c;
+    --vellum:rgba(18,20,38,.62); --vellum-2:rgba(11,12,25,.74);
+    --field:rgba(8,9,20,.66);
+    --edge:rgba(120,225,210,.22); --edge-soft:rgba(120,225,210,.10);
+    --hair:rgba(232,200,121,.20);
+    --txt:#eef1f7; --dim:#8e93ad; --faint:#565b78;
+    --cyan:#5fe0d0; --cyan-hi:#8af3e6;
+    --gold:#e8c879; --gold-hi:#f4dca0;
+    --glow:rgba(95,224,208,.40); --glow-gold:rgba(232,200,121,.35);
+    --neb-1:rgba(56,140,160,.30); --neb-2:rgba(150,120,60,.16); --neb-3:rgba(40,70,140,.30);
+    --danger:#ff6f8a;
+    --ok:#69e0a8;
+  }
+
+  /* ================================= */
+  /* 2. 堕落态 —— 噬血绯红             */
+  /* ================================= */
+  html[data-mode="fall"]{
+    --ink:#0d0407;
+    --ink-2:#190810;
+    --vellum:rgba(40,12,22,.62); --vellum-2:rgba(26,7,14,.76);
+    --field:rgba(22,5,11,.7);
+    --edge:rgba(255,90,120,.26); --edge-soft:rgba(255,90,120,.12);
+    --hair:rgba(190,40,90,.24);
+    --txt:#f9e7ec; --dim:#b88792; --faint:#7a4b58;
+    --cyan:#ff5a78; --cyan-hi:#ff9bae;
+    --gold:#c9476f; --gold-hi:#ee7a9a;
+    --glow:rgba(255,90,120,.42); --glow-gold:rgba(201,71,111,.4);
+    --neb-1:rgba(150,30,60,.34); --neb-2:rgba(90,20,80,.22); --neb-3:rgba(120,20,40,.3);
+  }
+
+  /* ================================= */
+  /* 3. 魔人态 —— 紫蚀魔契             */
+  /* ================================= */
+  html[data-mode="demon"]{
+    --ink:#08050f;
+    --ink-2:#120a22;
+    --vellum:rgba(30,14,52,.62); --vellum-2:rgba(19,8,38,.78);
+    --field:rgba(16,7,32,.72);
+    --edge:rgba(176,98,255,.28); --edge-soft:rgba(176,98,255,.12);
+    --hair:rgba(132,46,196,.26);
+    --txt:#f1e8fb; --dim:#a994c6; --faint:#6b5590;
+    --cyan:#b06cff; --cyan-hi:#d2a4ff;
+    --gold:#e25a9a; --gold-hi:#f489b8;
+    --glow:rgba(176,98,255,.44); --glow-gold:rgba(226,90,154,.4);
+    --neb-1:rgba(96,30,168,.36); --neb-2:rgba(128,22,104,.24); --neb-3:rgba(58,18,128,.34);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Noto Sans SC",-apple-system,system-ui,sans-serif;
+    color:var(--txt);background:var(--ink);min-height:100vh;
+    padding:30px 14px 60px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    transition:background .9s ease;position:relative;overflow-x:hidden;
+  }
+
+  /* ===== 星空背景 ===== */
+  .sky{position:fixed;inset:0;z-index:-3;pointer-events:none;transition:opacity .9s}
+  .sky::before{content:"";position:absolute;inset:-15%;
+    background:
+      radial-gradient(46% 40% at 16% 14%, var(--neb-1) 0%, transparent 60%),
+      radial-gradient(50% 46% at 88% 20%, var(--neb-2) 0%, transparent 62%),
+      radial-gradient(60% 55% at 50% 112%, var(--neb-3) 0%, transparent 58%);
+    filter:blur(10px);opacity:.6;animation:breathe 22s ease-in-out infinite alternate; transition: background 1s ease;}
+  @keyframes breathe{from{transform:scale(1)}to{transform:scale(1.07) translateY(-2%)}}
+
+  .stars{position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.5;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, #fff 50%, transparent),
+      radial-gradient(1px 1px at 70% 22%, #cfe 50%, transparent),
+      radial-gradient(1px 1px at 45% 65%, #fff 50%, transparent),
+      radial-gradient(1.4px 1.4px at 85% 70%, #ffe 50%, transparent),
+      radial-gradient(1px 1px at 32% 84%, #fff 50%, transparent),
+      radial-gradient(1px 1px at 60% 48%, #def 50%, transparent);
+    animation:twinkle 6s ease-in-out infinite alternate}
+  @keyframes twinkle{from{opacity:.3}to{opacity:.7}}
+
+  /* 星盘 */
+  .astrolabe{position:fixed;top:50%;left:50%;width:min(135vmin,1200px);aspect-ratio:1;
+    transform:translate(-50%,-50%);z-index:-2;pointer-events:none;opacity:.12;
+    animation:rotate 160s linear infinite; transition: stroke 1s ease;}
+  html[data-mode="fall"] .astrolabe{animation-direction:reverse;opacity:.14}
+  @keyframes rotate{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+  .wrap{max-width:740px;margin:0 auto}
+
+  /* ===== 契约书主体 ===== */
+  .scroll{
+    position:relative;
+    background:linear-gradient(168deg,var(--vellum),var(--vellum-2));
+    backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);
+    padding:36px clamp(18px,4vw,40px) 40px;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.85);
+    animation:enter 1s cubic-bezier(.2,.85,.2,1) both;
+    transition: background 0.8s ease, box-shadow 0.8s ease;
+  }
+  @keyframes enter{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+  .scroll::before{content:"";position:absolute;inset:8px;border:1px solid var(--edge);pointer-events:none;transition: border-color 0.8s ease;}
+  .scroll::after{content:"";position:absolute;inset:12px;border:1px solid var(--hair);pointer-events:none;transition: border-color 0.8s ease;}
+  .corner{position:absolute;width:24px;height:24px;color:var(--gold);z-index:2;opacity:.9;transition: color 0.8s ease;}
+  .corner.tl{top:5px;left:5px}.corner.tr{top:5px;right:5px;transform:scaleX(-1)}
+  .corner.bl{bottom:5px;left:5px;transform:scaleY(-1)}
+  .corner.br{bottom:5px;right:5px;transform:scale(-1)}
+
+  /* ===== 抬头 ===== */
+  .head{text-align:center;position:relative;z-index:1;animation:fade 1s .15s both}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .head .seal-mark{font-size:12px;letter-spacing:.5em;color:var(--gold);
+    font-family:"Cormorant Garamond",serif;font-style:italic;margin-bottom:4px;transition: color 0.5s;}
+  .head h1{font-family:"Noto Serif SC",serif;font-weight:700;
+    font-size:clamp(25px,5vw,34px);letter-spacing:.14em;color:var(--txt);
+    text-shadow:0 0 32px var(--glow);
+    transition: text-shadow 0.5s;}
+  .head h1 b{color:var(--cyan);font-weight:700;transition: color 0.5s;}
+  .head .latin{font-family:"Cormorant Garamond",serif;font-size:13px;letter-spacing:.36em;
+    color:var(--gold);opacity:.85;margin-top:5px;text-transform:uppercase;transition: color 0.5s;}
+  .head .sub{color:var(--dim);font-size:12px;font-weight:300;margin-top:12px}
+  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;
+    color:var(--gold);margin:18px 0 4px;opacity:.7;transition: color 0.5s;}
+  .ornament i{height:1px;width:80px;background:linear-gradient(90deg,transparent,var(--gold));transition: background 0.5s;}
+  .ornament i:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
+
+  /* ===== 卷宗工具条 ===== */
+  .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+    border:1px solid var(--edge-soft);background:var(--field);
+    padding:9px 12px;margin-top:6px;position:relative;z-index:1;animation:fade 1s .25s both; transition: border-color 0.5s, background 0.5s;}
+  .toolbar .lbl{display:flex;align-items:center;gap:6px;color:var(--gold);
+    font-size:12px;font-weight:500;letter-spacing:.08em;white-space:nowrap;transition: color 0.5s;}
+  select,.tb,input,textarea{font-family:inherit;color:var(--txt);outline:none; transition: all 0.3s ease;}
+  select{flex:1;min-width:130px;background:var(--ink-2);border:1px solid var(--edge-soft);
+    padding:8px 10px;font-size:12.5px;cursor:pointer;appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%238e93ad'><path d='M3 5l4 4 4-4'/></svg>");
+    background-repeat:no-repeat;background-position:right 10px center;}
+  select:focus{border-color:var(--cyan);box-shadow:0 0 0 2px var(--glow)}
+  .tb{display:inline-flex;align-items:center;gap:5px;cursor:pointer;border:1px solid var(--edge-soft);
+    background:transparent;padding:7px 10px;font-size:12px;font-weight:500;white-space:nowrap}
+  .tb:hover{transform:translateY(-1px)}.tb:active{transform:none}
+  .tb svg{width:13px;height:13px}
+  .tb.read:hover{border-color:var(--cyan);color:var(--cyan-hi);box-shadow:0 0 16px -4px var(--glow)}
+  .tb.save{color:var(--ok)}.tb.save:hover{border-color:var(--ok);box-shadow:0 0 16px -5px rgba(105,224,168,.6)}
+  .tb.del{color:var(--danger)}.tb.del:hover{border-color:var(--danger);box-shadow:0 0 16px -5px rgba(255,111,138,.6)}
+  .tb.ico{padding:7px;color:var(--gold)}
+  .tb.ico:hover{border-color:currentColor;box-shadow:0 0 14px -4px currentColor}
+
+  /* ===== 身份立场·总开关 (魔法少女 / 魔人) ===== */
+  .role-switch-wrap{margin-top:14px}
+  .role-switch{display:flex;border:1px solid var(--edge);background:var(--field);
+    position:relative;overflow:hidden;border-radius:5px;
+    box-shadow:inset 0 0 26px -12px var(--glow);
+    transition:border-color .6s,background .6s,box-shadow .6s;}
+  .role-switch button{flex:1;border:none;background:transparent;color:var(--dim);
+    font-family:"Noto Serif SC",serif;font-size:15px;font-weight:700;letter-spacing:.26em;
+    padding:13px 8px;cursor:pointer;transition:color .4s;z-index:1;
+    display:flex;align-items:center;justify-content:center;gap:8px;}
+  .role-switch button .ic{font-size:14px;opacity:.92;letter-spacing:0}
+  .role-switch button.on{color:var(--ink)}
+  .role-switch .bar{position:absolute;top:0;bottom:0;left:0;width:50%;
+    transition:transform .55s cubic-bezier(.5,1.5,.4,1),background .55s;
+    background:linear-gradient(120deg,var(--cyan-hi),var(--gold-hi))}
+  .role-switch[data-r="demon"] .bar{transform:translateX(100%);
+    background:linear-gradient(120deg,#d2a4ff,#e25a9a)}
+
+  /* ===== 三段式人格刻印 ===== */
+  .moral-wrap {margin-top: 14px;}
+  .moral{display:flex;border:1px solid var(--edge);background:var(--field);
+    position:relative;overflow:hidden; border-radius: 4px; transition: border-color 0.5s, background 0.5s;}
+  .moral button{flex:1;border:none;background:transparent;color:var(--dim);
+    font-family:"Noto Serif SC",serif;font-size:13.5px;font-weight:700;letter-spacing:.2em;
+    padding:10px;cursor:pointer;transition:color .35s;z-index:1;}
+  .moral button.on{color:var(--ink)}
+
+  /* 滑块动画逻辑 (分为0%, 100%, 200%) */
+  .moral .bar{position:absolute;top:0;bottom:0;left:0;width:50%;
+    transition:transform .5s cubic-bezier(.5,1.5,.4,1),background .5s;
+    background:linear-gradient(120deg,var(--cyan-hi),var(--cyan))}
+  .moral[data-v="fall"] .bar{transform:translateX(100%);
+    background:linear-gradient(120deg,#ff8aa0,#c9476f)}
+
+  /* ===== 三段式开局路线切换 ===== */
+  .route-tabs{display:flex;border:1px solid var(--edge);background:var(--field);
+    position:relative;overflow:hidden;border-radius:4px;margin:6px 0 14px;
+    transition:border-color .5s,background .5s;}
+  .route-tabs button{flex:1;border:none;background:transparent;color:var(--dim);
+    font-family:"Noto Serif SC",serif;font-size:13px;font-weight:700;letter-spacing:.14em;
+    padding:10px 6px;cursor:pointer;transition:color .35s;z-index:1;}
+  .route-tabs button.on{color:var(--ink)}
+  .route-tabs .bar{position:absolute;top:0;bottom:0;left:0;width:33.3333%;
+    transition:transform .5s cubic-bezier(.5,1.5,.4,1),background .5s;
+    background:linear-gradient(120deg,var(--cyan-hi),var(--cyan))}
+  .route-tabs[data-rt="gray"] .bar{transform:translateX(100%);
+    background:linear-gradient(120deg,var(--gold-hi),var(--gold))}
+  .route-tabs[data-rt="monster"] .bar{transform:translateX(200%);
+    background:linear-gradient(120deg,#caa2ff,#9a6cff)}
+
+  /* 路线分页 */
+  .route-panel{display:none;animation:fade .35s both}
+  .route-panel.on{display:block}
+  .route-panel .chips{margin-bottom:8px}
+
+  /* 自定义 chip 输入框（样式与 .chip 对齐） */
+  .chip-custom{border:1px dashed var(--edge);background:var(--field);color:var(--txt);
+    padding:6px 12px;font-size:12px;font-family:inherit;font-weight:500;letter-spacing:.03em;
+    border-radius:4px;width:92px;min-width:0;transition:all .2s;}
+  .chip-custom::placeholder{color:var(--faint)}
+  .chip-custom:hover{border-color:var(--cyan)}
+  .chip-custom:focus{border-style:solid;border-color:var(--cyan);box-shadow:0 0 12px -5px var(--glow)}
+/* ===== 分区基础 ===== */
+  .sec{margin-top:26px;position:relative;z-index:1;animation:fade 1s both}
+  .sec-h{display:flex;align-items:center;justify-content:flex-start;gap:12px;margin-bottom:6px}
+  .sec-h .ln{height:1px;transition: background 0.5s;}
+  .sec-h .ln.l{display:none}
+  .sec-h .ln.r{flex:1;background:linear-gradient(90deg,var(--edge),transparent)}
+  .sec-h .ttl{font-family:"Noto Serif SC",serif;font-weight:700;font-size:16px;
+    letter-spacing:.16em;white-space:nowrap;display:flex;align-items:baseline;gap:8px}
+  .sec-h .ttl .glyph{color:var(--gold);font-size:12px;
+    transition: color 0.5s;}
+  .sec-h .ttl .en{font-family:"Cormorant Garamond",serif;font-style:italic;
+    font-size:11.5px;letter-spacing:.12em;color:var(--faint);font-weight:500; transition: color 0.5s;}
+  .sec-body{margin-top:14px}
+
+  /* ===== 视图控制 (核心显示隐藏逻辑) ===== */
+  .mode-good, .mode-fall, .not-good, .mode-demon,
+  .role-mahou, .role-demon { display: none;
+  }
+
+  /* —— 身份层：魔法少女 / 魔人 —— */
+  html[data-role="mahou"] .role-mahou { display: block; animation: modeEnter .6s ease both; }
+  html[data-role="demon"] .role-demon { display: block; animation: modeEnter .6s ease both; }
+
+  /* —— 状态层：仅魔法少女身份下的善良/堕落分支 —— */
+  html[data-role="mahou"][data-mode="good"] .mode-good { display: block; animation: modeEnter .6s ease both;
+  }
+
+  html[data-role="mahou"][data-mode="fall"] .mode-fall { display: block; animation: modeEnter .6s ease both;
+  }
+  html[data-role="mahou"][data-mode="fall"] .not-good { display: block; animation: modeEnter .6s ease both;
+  }
+  /* —— 魔人态专属 —— */
+  html[data-mode="demon"] .mode-demon { display: block; animation: modeEnter .6s ease both; }
+@keyframes modeEnter{
+    from{opacity:0;transform:translateY(-5px) scale(.99);filter:blur(3px)}
+    to{opacity:1;transform:none;filter:blur(0)}
+  }
+
+  /* 堕落态的标题特效 */
+  html[data-mode="fall"] .not-good .sec-h .ttl .glyph,
+  html[data-mode="fall"] .mode-fall .sec-h .ttl .glyph {
+    text-shadow:0 0 8px var(--glow);animation:bloodPulse 3s ease-in-out infinite}
+
+  @keyframes bloodPulse{50%{text-shadow:0 0 16px var(--glow),0 0 4px var(--cyan)}}
+
+  /* 魔人态的标题特效 */
+  html[data-mode="demon"] .role-demon .sec-h .ttl .glyph{
+    text-shadow:0 0 10px var(--glow);animation:hexPulse 3.2s ease-in-out infinite}
+  @keyframes hexPulse{50%{text-shadow:0 0 18px var(--glow),0 0 5px var(--gold-hi);color:var(--cyan-hi)}}
+
+  /* 表单控件 */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+  .f.full{grid-column:1/-1}
+  label{display:block;color:var(--dim);font-size:11.5px;font-weight:500;letter-spacing:.05em; margin-bottom:5px;
+    transition: color 0.5s;}
+  label .star{color:var(--gold);font-size:10px;margin-left:3px;vertical-align:top; transition: color 0.5s;}
+  input[type=text],textarea{width:100%;background:var(--field);border:1px solid var(--edge-soft);
+    border-bottom:1px solid var(--edge);padding:9px 12px;font-size:13.5px;
+    transition:border-color .25s,box-shadow .25s,background .25s}
+  input::placeholder,textarea::placeholder{color:var(--faint)}
+  input:focus,textarea:focus{border-color:var(--cyan);background:rgba(0,0,0,.4);
+    box-shadow:0 3px 18px -8px var(--glow)}
+  textarea{resize:vertical;min-height:50px;line-height:1.6}
+  .age{max-width:120px}
+
+  /* 标签组 */
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  /* 紧凑单行：缩小字号与内距，使较窄容器内的标签不换行 */
+  .chips.compact{flex-wrap:nowrap;gap:5px}
+  .chips.compact > .chip{flex:0 0 auto;white-space:nowrap;padding:6px 9px;font-size:11px;letter-spacing:0}
+  .chip{border:1px solid var(--edge-soft);background:var(--field);color:var(--dim);
+    padding:6px 12px;font-size:12px;cursor:pointer;transition:all .2s;font-weight:500;
+    letter-spacing:.03em; border-radius: 4px;}
+  .chip:hover{color:var(--txt);border-color:var(--cyan)}
+  .chip.on{background:linear-gradient(120deg,var(--cyan),var(--gold));color:var(--ink);
+    border-color:transparent;font-weight:700;box-shadow:0 4px 14px -5px var(--glow)}
+  .hint{font-size:11px;color:var(--faint);margin-top:7px;font-weight:300;line-height:1.5;
+    transition: color 0.5s;}
+
+  /* ===== 称号行：示例标签 + 自定义框同行 ===== */
+  .title-row{display:flex;align-items:center;gap:8px}
+  .title-row .chips{flex:0 0 auto;margin:0}
+  .title-row .title-input{flex:1;min-width:120px}
+  @media(max-width:560px){.title-row{flex-wrap:wrap}.title-row .title-input{min-width:100%}}
+
+  /* ===== 立约用印 ===== */
+  .forge-wrap{margin-top:36px;text-align:center;position:relative;z-index:1;animation:fade 1s .66s both}
+  .forge{display:inline-flex;align-items:center;gap:12px;cursor:pointer;border:none;
+    font-family:"Noto Serif SC",serif;font-weight:700;font-size:15px;letter-spacing:.22em;
+    color:var(--ink);padding:13px 38px 13px 20px;position:relative;overflow:hidden;
+    background:linear-gradient(120deg,var(--cyan-hi),var(--gold-hi));
+    box-shadow:0 16px 40px -14px var(--glow),inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .2s,box-shadow .5s, background .5s;}
+  .forge .stamp{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(0,0,0,.18);border:1.5px solid rgba(0,0,0,.35);font-size:15px;
+    box-shadow:inset 0 0 8px rgba(0,0,0,.3)}
+  .forge::after{content:"";position:absolute;top:0;left:-60%;width:35%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+    transform:skewX(-20deg);animation:sheen 5s ease-in-out infinite}
+  @keyframes sheen{0%,55%{left:-60%}78%,100%{left:135%}}
+  .forge:hover{transform:translateY(-2px);box-shadow:0 20px 50px -14px var(--glow)}
+  .forge:active{transform:none}
+
+  /* 输出区 */
+  .out{margin-top:24px;display:none;position:relative;z-index:1;animation:enter .5s both}
+  .out.show{display:block}
+  .out-h{display:flex;justify-content:space-between;align-items:center;gap:10px;
+    margin-bottom:10px;flex-wrap:wrap}
+  .out-h span{color:var(--cyan-hi);font-size:12px;font-weight:500;letter-spacing:.04em}
+  .out-box{width:100%;background:#05050d;border:1px solid var(--edge);padding:14px;
+    font-family:"SFMono-Regular",Consolas,monospace;font-size:12px;color:#cfe7e2;
+    line-height:1.7;min-height:100px;white-space:pre;overflow:auto; border-radius: 6px;}
+
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);
+    background:var(--vellum);border:1px solid var(--edge);color:var(--txt);
+    padding:10px 18px;font-size:13px;backdrop-filter:blur(14px);
+    border-radius: 4px;
+    box-shadow:0 14px 40px -14px rgba(0,0,0,.7);opacity:0;pointer-events:none;
+    transition:opacity .3s,transform .3s;z-index:99}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:560px){
+    .grid{grid-template-columns:1fr}
+    .sec-h .ln{max-width:40px}
+    .head .latin{letter-spacing:.2em;font-size:11.5px}
+  }
+  /* ---- 开局人物名册 ---- */
+  .roster-toggle{display:block;width:100%;padding:11px;border:1px dashed var(--edge);border-radius:9px;background:transparent;color:var(--gold);font-family:inherit;font-size:13.5px;cursor:pointer;letter-spacing:1px;transition:all .2s}
+  .roster-toggle:hover{background:var(--edge-soft);border-style:solid}
+  .roster-add{display:block;width:100%;margin-top:16px;padding:12px;border:0;border-radius:9px;background:linear-gradient(120deg,var(--cyan),var(--gold));color:var(--ink);font-family:"Noto Serif SC",serif;font-weight:700;font-size:14px;letter-spacing:2px;cursor:pointer;transition:filter .2s}
+  .roster-add:hover{filter:brightness(1.07)}
+  .roster-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .rl-empty{text-align:center;color:var(--faint);font-size:12.5px;padding:14px 0}
+  .rcard{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;border-radius:10px;background:var(--field);border:1px solid var(--edge-soft);border-left:3px solid var(--cyan)}
+  .rcard.k-demon{border-left-color:#b06cff}.rcard.k-mortal{border-left-color:#d2b482}.rcard.k-mahou{border-left-color:#5fe0d0}
+  .rc-m{flex:1;min-width:0}
+  .rc-n{font-family:"Noto Serif SC",serif;font-weight:700;font-size:14.5px;color:var(--txt);margin-right:7px}
+  .rc-t{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--edge-soft);color:var(--gold)}
+  .rc-s{font-size:11.5px;color:var(--dim);margin-top:4px;word-break:break-all}
+  .rc-a{display:flex;gap:6px;flex-shrink:0}
+  .rc-a button{font-family:inherit;font-size:12px;padding:5px 10px;border-radius:6px;cursor:pointer;border:1px solid var(--edge-soft);background:transparent;color:var(--dim);transition:all .2s}
+  .rc-a button:hover{border-color:var(--cyan);color:var(--cyan-hi)}
+  /* ---- 折叠选填栏目 ---- */
+  .sec.fold > .sec-body{display:none}
+  .sec.fold.open > .sec-body{display:block;animation:foldin .25s ease}
+  @keyframes foldin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .sec.fold > .sec-h{cursor:pointer;transition:opacity .2s}
+  .sec.fold > .sec-h:hover{opacity:.82}
+  .sec.fold > .sec-h .ttl::after{content:"▸ 点开填写";margin-left:10px;font-size:10.5px;letter-spacing:1px;opacity:.62;color:var(--gold);font-family:"Noto Sans SC",sans-serif;vertical-align:middle}
+  .sec.fold.open > .sec-h .ttl::after{content:"▾ 收起"}
+  /* ---- 版本印记 ---- */
+  .vbadge{display:inline-block;margin-top:11px;padding:4px 13px;border:1px solid var(--cyan);border-radius:20px;font-size:11.5px;color:var(--cyan-hi,var(--cyan));letter-spacing:1.5px;background:var(--edge-soft);font-family:"Noto Sans SC",sans-serif}
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<div class="stars"></div>
+<svg class="astrolabe" viewBox="0 0 400 400" fill="none" stroke="var(--cyan)" stroke-width="1">
+  <circle cx="200" cy="200" r="194"/><circle cx="200" cy="200" r="160" stroke="var(--gold)" stroke-dasharray="1 7"/>
+  <circle cx="200" cy="200" r="120"/><circle cx="200" cy="200" r="78" stroke-dasharray="5 7"/>
+  <g stroke="var(--gold)"><line x1="200" y1="6" x2="200" y2="40"/><line x1="200" y1="360" x2="200" y2="394"/>
+   <line x1="6" y1="200" x2="40" y2="200"/><line x1="360" y1="200" x2="394" y2="200"/></g>
+  <circle cx="200" cy="200" r="40" stroke="var(--gold)"/><circle cx="200" cy="200" r="6"/>
+</svg>
+
+<div class="wrap">
+<div class="scroll">
+  <svg class="corner tl" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 14V2h12M2 2l8 8"/></svg>
+  <svg class="corner tr" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 14V2h12M2 2l8 8"/></svg>
+  <svg class="corner bl" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 14V2h12M2 2l8 8"/></svg>
+  <svg class="corner br" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 14V2h12M2 2l8 8"/></svg>
+
+  <div class="head">
+    <div class="seal-mark" id="sealMark">✶ Per Aspera ✶</div>
+    <h1 id="docTitle">星盟<b>契约</b>书</h1>
+    <div class="vbadge">v8 · 名册一体 · 折叠瘦身 · 06-13</div>
+    <div class="latin" id="docLatin">The Covenant of Stars</div>
+    <p class="sub" id="docSub">书写你的姓名与誓约，星盘将记下命运的齿轮。</p>
+    <div class="ornament"><i></i>✦<i></i></div>
+  </div>
+
+  <div class="toolbar">
+    <span class="lbl">✦ 卷宗</span>
+    <select id="schemeSel"><option value="">— 选择已存卷宗 —</option></select>
+    <button class="tb read" id="btnLoad" title="读取选中卷宗">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v8M5 7l3 3 3-3M3 13h10"/></svg>读取</button>
+    <button class="tb save" id="btnSave" title="存为新卷宗">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3h8l2 2v8H3zM6 3v3h4V3"/></svg>保存</button>
+    <button class="tb del" id="btnDel" title="删除选中卷宗">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 4h10M6 4V2h4v2M5 4l1 9h4l1-9"/></svg>删除</button>
+    <button class="tb ico" id="btnExport" title="导出 JSON 备份">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 10V2M5 5l3-3 3 3M3 11v2h10v-2"/></svg></button>
+    <button class="tb ico" id="btnImport" title="导入 JSON 备份">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v8M11 7l-3 3-3-3M3 13h10"/></svg></button>
+    <input type="file" id="fileImport" accept=".json" hidden>
+  </div>
+
+  <!-- ===== 身份立场 · 总开关 ===== -->
+  <div class="role-switch-wrap">
+    <label>缔约者身份 / 执笔立场<span class="star">✦</span></label>
+    <div class="role-switch" data-r="mahou" id="roleSwitch">
+      <div class="bar"></div>
+      <button data-val="mahou" class="on"><span class="ic">✶</span>魔法少女</button>
+      <button data-val="demon"><span class="ic">⛧</span>魔　人</button>
+    </div>
+    <div class="hint">魔法少女＝守护者 / 恶堕视角；魔人＝猎手反派视角（化形魔人 · 寄生魔人 · 恶堕守护者 · 魔物）。切换后下方栏目随之改变。</div>
+  </div>
+
+  <div class="sec role-mahou">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">❖</span>核心人格<span class="en">Soul Core</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <div class="grid">
+        <div class="f"><label>姓名<span class="star">✦</span></label>
+          <input type="text" data-k="name" placeholder="例：簌簌小姐"></div>
+        <div class="f"><label>特质 / 标签</label>
+      <input type="text" data-k="trait" placeholder="例：活泼开朗，跳蛋大王"></div>
+      </div>
+
+      <div class="f full" style="margin-top:14px">
+        <label>称号 / 别名</label>
+        <div class="title-row">
+          <div class="chips compact plot-chips" data-target="title">
+            <span class="chip">极光的歌者</span>
+            <span class="chip">苍蓝的守望</span>
+            <span class="chip">绯红镇魂曲</span>
+            <span class="chip">深渊咏叹者</span>
+          </div>
+          <input type="text" data-k="title" class="title-input" placeholder="或自定义称号…">
+        </div>
+      </div>
+
+      <div class="moral-wrap">
+        <label>阵营与堕落阶段判定<span class="star">✦</span></label>
+        <div class="moral" data-v="good" id="moral">
+          <div class="bar"></div>
+          <button data-val="善良" class="on">纯 洁</button>
+          <button data-val="堕落">堕 落</button>
+</div>
+      </div>
+
+      <div class="f full mode-good" style="margin-top:16px"><label>弱点 / 软肋</label>
+        <textarea data-k="weakness" placeholder="例：怕黑；听到母亲名字会失控；魔力枯竭时无法变身……"></textarea>
+        <div class="hint">可包含性格弱点、身体弱点或设定限制等，是角色立体感的关键。</div>
+      </div>
+
+      <div class="f full not-good" style="margin-top:16px"><label>固有弱点<span class="star">✦</span></label>
+      <textarea data-k="fetish" placeholder="例：对特定的触碰会直接失神……"></textarea>
+        <div class="hint" style="color:var(--dim)">直白填写角色心理沉沦点。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec fold role-mahou">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">❖</span>凡间身份<span class="en">Mortal Guise</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <label>日常身份 / 职业</label>
+      <div class="chips" id="idChips" data-fill="identity"><span class="chip">学生</span><span class="chip">教师</span><span class="chip">上班族</span><span class="chip">医护</span><span class="chip">自由职业</span><span class="chip">无业</span></div>
+      <div class="grid" style="margin-top:14px">
+        <div class="f"><label>填写 / 自定义身份</label>
+          <input type="text" data-k="identity" placeholder="点上方标签或直接输入，如：大学一年级学生"></div>
+        <div class="f"><label>年龄（选填）</label>
+          <input type="text" data-k="age" class="age" placeholder="例：19"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec fold role-mahou">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">❖</span>阶级属性<span class="en">Rank & Camp</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <div class="grid">
+        <div class="f">
+          <label>所属阵营</label>
+          <div class="chips" data-chip="camp">
+            <span class="chip" data-val="异事管理特别局（官方）">官方编制</span>
+            <span class="chip" data-val="独立魔法少女">独立魔法少女</span>
+ <span class="chip" data-val="魔人同盟（堕化）">魔人同盟</span>
+          </div>
+        </div>
+        <div class="f">
+          <label>当前等级</label>
+          <div class="chips compact" data-chip="rank"><span class="chip" data-val="见习魔法少女">见习</span><span class="chip" data-val="正式魔法少女">正式</span><span class="chip" data-val="精英魔法少女">精英</span><span class="chip" data-val="战姬">战姬</span><span class="chip" data-val="传奇">传奇</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec fold role-mahou">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">❖</span>星灵与魔法<span class="en">Arcana Pact</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <div class="grid">
+        <div class="f"><label>能力系别</label>
+ <input type="text" data-k="power" placeholder="如：元素系/强化系/特殊系"></div>
+        <div class="f"><label>星灵载体</label>
+          <input type="text" data-k="astral_type" placeholder="例：流星发簪、璀璨星盘"></div>
+        <div class="f full"><label>魔法能力详情</label>
+          <textarea data-k="power_desc" placeholder="具体说明你的能力。例：操控光，可凝光成刃、折射隐身等。"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="sec fold role-mahou">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">❖</span>开场剧情<span class="en">Opening Scene</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <label>开场剧情 / 路线偏向（可选，点标签快速填入或自定义）</label>
+
+      <!-- 三段式开局路线切换 -->
+      <div class="route-tabs" data-rt="normal" id="routeTabs">
+        <div class="bar"></div>
+        <button data-rt="normal" class="on">正常开局</button>
+        <button data-rt="gray">灰产开局</button>
+        <button data-rt="monster">魔物开局</button>
+      </div>
+
+      <!-- 正常开局 -->
+      <div class="route-panel on" data-panel="normal">
+        <div class="chips plot-chips" data-target="route">
+          <span class="chip">战斗升级（正面讨敌）</span>
+          <span class="chip">隐市守护（潜伏都市）</span>
+          <span class="chip">羁绊养成（偏日常向）</span>
+          <span class="chip">任务委托（组织派遣）</span>
+          <span class="chip">异变追查（都市悬案）</span>
+          <span class="chip">新人登场（初次变身）</span>
+        </div>
+      </div>
+
+      <!-- 灰产开局 -->
+      <div class="route-panel" data-panel="gray">
+        <div class="chips plot-chips" data-target="route">
+          <span class="chip">权贵性奴</span>
+          <span class="chip">地下性斗</span>
+          <span class="chip">强制配种</span>
+          <span class="chip">活体家具</span>
+          <span class="chip">星光夜场</span>
+          <span class="chip">尖刀雌犬</span>
+          <span class="chip">色情间谍</span>
+          <span class="chip">订阅直播</span>
+          <span class="chip">催眠控制</span>
+          <span class="chip">绳缚拘束</span>
+          <span class="chip">调教贩卖</span>
+          <span class="chip">浴汤侍奉</span>
+          <span class="chip">魔力榨取</span>
+          <span class="chip">活体拍卖</span>
+          <span class="chip">感官共享</span>
+          <span class="chip">麻豆传媒</span>
+          
+        </div>
+        <div class="hint">自定义格可直接输入想要的开场，按回车或点击别处即可填入下方。</div>
+      </div>
+
+      <!-- 魔物开局 -->
+      <div class="route-panel" data-panel="monster">
+        <div class="chips plot-chips" data-target="route">
+          <span class="chip">经典触手</span>
+          <span class="chip">虫奸产卵</span>
+          <span class="chip">机  械  奸</span>
+          <span class="chip">群众背叛</span>
+          <span class="chip">感官阻断</span>
+          <span class="chip">常识改写</span>
+          <span class="chip">星器淫化</span>
+          <span class="chip">催情毒雾</span>
+          <span class="chip">哥  布  林</span>
+          <span class="chip">堕落祭坛</span>
+          <span class="chip">宝箱陷阱</span>
+          <span class="chip">镜像双生</span>
+          <span class="chip">发情花妖</span>
+          <span class="chip">黑暗圣经</span>
+          <span class="chip">时间静止</span>
+          <span class="chip">深渊淫泉</span>
+          <span class="chip">史莱姆墙</span>
+          <span class="chip">恶堕百合</span>
+          <span class="chip">随机魔物</span>
+        </div>
+      </div>
+
+      <textarea data-k="route" placeholder="想要的开场情景与故事方向，可只写大概，余下交由命运……"></textarea>
+    </div>
+  </div>
+
+  <!-- ============ 魔人专属栏目 ============ -->
+  <div class="sec role-demon">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">◈</span>魔核 · 本源<span class="en">Abyssal Core</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <div class="grid">
+        <div class="f"><label>魔名 / 姓名<span class="star">✦</span></label>
+          <input type="text" data-k="demon_name" placeholder="例：缢血者·诺克斯"></div>
+        <div class="f"><label>特质 / 标签</label>
+          <input type="text" data-k="demon_trait" placeholder="例：优雅冷酷，玩弄猎物"></div>
+      </div>
+
+      <div class="f full" style="margin-top:14px">
+        <label>性别</label>
+        <div class="chips plot-chips" data-target="demon_gender" style="margin-bottom:8px">
+          <span class="chip">男</span>
+          <span class="chip">女</span>
+          <span class="chip">不定形</span>
+          <span class="chip">无性别</span>
+        </div>
+        <input type="text" data-k="demon_gender" placeholder="点标签或自定义，如：以男性形态示人">
+      </div>
+
+      <div class="f full" style="margin-top:14px">
+        <label>称号 / 魔号</label>
+        <div class="title-row">
+          <div class="chips compact plot-chips" data-target="demon_title">
+            <span class="chip">噬梦之影</span>
+            <span class="chip">绯夜伯爵</span>
+            <span class="chip">无面行者</span>
+            <span class="chip">堕星使徒</span>
+          </div>
+          <input type="text" data-k="demon_title" class="title-input" placeholder="或自定义魔号…">
+        </div>
+      </div>
+
+      <div class="f full" style="margin-top:16px">
+        <label>类型 / 来历（点标签定你属于哪种深渊存在，下方可展开写成魔背景）</label>
+        <div class="chips" data-chip="demon_kind">
+          <span class="chip" data-val="化形魔人">化形魔人（高阶魔物所化·智高善伪装）</span>
+          <span class="chip" data-val="寄生体魔人">寄生体魔人（占据人类躯壳·肉体强悍）</span>
+          <span class="chip" data-val="恶堕魔法少女">恶堕魔法少女（曾是守护者·保留系别）</span>
+          <span class="chip" data-val="原生·变异魔物">原生 / 变异魔物（凭灾异本能猎杀）</span>
+        </div>
+        <textarea data-k="demon_origin" style="margin-top:8px" placeholder="（选填）你如何成为深渊的一员？这段成魔过往往往是性格与执念的根源。"></textarea>
+      </div>
+
+      <div class="f full" style="margin-top:16px">
+        <label>深渊位格（魔人一方的自有强弱称谓·参照成长体系自选，选填）</label>
+        <div class="chips" data-chip="demon_tier">
+          <span class="chip" data-val="孳生体">孳生体（约可与见习守护者周旋）</span>
+          <span class="chip" data-val="蚀魂者">蚀魂者（约能猎杀正式守护者）</span>
+          <span class="chip" data-val="化渊者">化渊者（约可匹敌精英守护者）</span>
+          <span class="chip" data-val="噬星者">噬星者（约能猎杀战姬）</span>
+          <span class="chip" data-val="渊厄">渊厄（堪与传奇相抗）</span>
+        </div>
+        <input type="text" data-k="demon_threat" placeholder="（选填）人类异事局对你的威胁标定，如 B级——这是人类的评估、非你的位格" style="margin-top:8px">
+        <div class="hint">位格是魔人自己的说法；F~S 只是人类给魔物贴的危险度评级，可留空。</div>
+      </div>
+
+      <div class="f full" style="margin-top:16px"><label>弱点 / 克星<span class="star">✦</span></label>
+        <textarea data-k="demon_weakness" placeholder="例：惧净化之光；魔核暴露时一击致命；嗜血时丧失理智……"></textarea>
+        <div class="hint">再强的猎手也有破绽——这是被反杀 / 讨伐的关键，也让角色更立体。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec fold role-demon">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">◈</span>凡间伪装<span class="en">Mortal Mask</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <label>伪装身份 / 职业（点标签或自定义）</label>
+      <div class="chips plot-chips" data-target="demon_identity" style="margin-bottom:8px">
+        <span class="chip">学生</span>
+        <span class="chip">教师</span>
+        <span class="chip">医生</span>
+        <span class="chip">艺术家</span>
+        <span class="chip">不伪装（以本体行动）</span>
+      </div>
+      <div class="grid" style="margin-top:4px">
+        <div class="f"><label>填写 / 自定义伪装</label>
+          <input type="text" data-k="demon_identity" placeholder="如：转学生、夜班医生……或本体"></div>
+        <div class="f"><label>表观年龄 / 魔龄（选填）</label>
+          <input type="text" data-k="demon_age" class="age" placeholder="例：看似20，实则三百岁"></div>
+      </div>
+      <div class="f full" style="margin-top:14px">
+        <label>所属阵营</label>
+        <div class="chips" data-chip="demon_camp">
+          <span class="chip" data-val="魔人同盟">魔人同盟（深渊势力）</span>
+          <span class="chip" data-val="魔人同盟·策反干部">同盟干部（主动投靠·升任干部）</span>
+          <span class="chip" data-val="独行魔人">独行魔人（不附属组织）</span>
+          <span class="chip" data-val="潜伏暗子">潜伏暗子（被策反 / 控制的眼线）</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec fold role-demon">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">◈</span>魔能叙述<span class="en">Demonic Arts</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <div class="hint" style="margin-bottom:10px">※ 魔物 / 魔人没有星灵「系别」，只有天生的灾异本能（化形、寄生魔人亦然）；唯「恶堕魔法少女」保留原本的系别能力。请按你的类型如实填写。</div>
+      <div class="grid">
+        <div class="f"><label>天生异能 / 原系别</label>
+          <input type="text" data-k="demon_power" placeholder="魔物类写灾异本能（腐蚀、精神污染等）；恶堕少女写原系别"></div>
+        <div class="f"><label>力量本源 / 魔核</label>
+          <input type="text" data-k="demon_core" placeholder="例：胸腔的黑色魔核、寄生的魔种"></div>
+        <div class="f full"><label>能力详解</label>
+          <textarea data-k="demon_power_desc" placeholder="详述能力如何施展、强弱边界。例：操纵阴影撕裂血肉，可化影潜行、束缚目标。"></textarea></div>
+        <div class="f full"><label>侵蚀 / 腐化手段</label>
+          <textarea data-k="demon_corrupt" placeholder="作为深渊一方，你如何对付魔法少女？例：以言语放大怨怼、利益诱惑、精神侵蚀、要挟亲友逼她恶堕……"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec fold role-demon">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">◈</span>狩猎之道<span class="en">The Hunt</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <label>狩猎偏好 / 目标（点标签或自定义）</label>
+      <div class="chips plot-chips" data-target="demon_hunt" style="margin-bottom:8px">
+        <span class="chip">猎杀强敌（专挑高阶魔法少女）</span>
+        <span class="chip">收集星器（夺取星灵载体壮大自身）</span>
+        <span class="chip">腐化堕落（诱使守护者恶堕入魔）</span>
+        <span class="chip">潜伏蚕食（隐于市井，缓慢侵蚀城市）</span>
+      </div>
+      <input type="text" data-k="demon_hunt" placeholder="想要的猎手目标，可只写大概，余下交由命运……">
+
+      <div style="margin-top:16px">
+        <label>开局剧情参考（点击快速填入）</label>
+        <div class="chips plot-chips" data-target="demon_plot">
+          <span class="chip">初袭（首次出手猎杀目标，行迹将露）</span>
+          <span class="chip">潜伏（已混入人群，物色第一个猎物）</span>
+          <span class="chip">复仇（恶堕后回头清算旧日同伴）</span>
+          <span class="chip">受命（奉魔人同盟之命，执行渗透 / 策反任务）</span>
+        </div>
+        <textarea data-k="demon_plot" style="margin-top:10px" placeholder="或在此自定义你的魔人开局走向……"></textarea>
+      </div>
+    </div>
+  </div>
+  <!-- ============ /魔人专属栏目 ============ -->
+
+  <div class="sec">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">❖</span>自定义描述<span class="en">Custom Notes</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <label>自定义描述</label>
+      <textarea data-k="look" placeholder="可填写外貌着装、特殊设定、开局补充说明等，自由发挥。"></textarea>
+    </div>
+ </div>
+
+  <!-- ============ 开局人物名册（选填·与档案一并生成） ============ -->
+  <div class="sec" id="rosterSec">
+    <div class="sec-h"><span class="ln l"></span>
+      <span class="ttl"><span class="glyph">✦</span>开局人物名册<span class="en">The Roster · 选填</span></span>
+      <span class="ln r"></span></div>
+    <div class="sec-body">
+      <div class="hint" style="margin-bottom:12px">想让开局就登场某些同伴 / 对手 / 宿敌？在此捏好「加入名册」，可加多个；不需要就留空，不影响铸印。捏的人会随你的档案<b>一并生成</b>，并被 NPC 控制板接住。</div>
+      <button type="button" class="roster-toggle" id="rosterToggle">＋ 展开捏人（选填）</button>
+      <div class="roster-body" id="rosterBody" style="display:none">
+        <label>身份类型</label>
+        <div class="chips" id="npcKind" style="margin-bottom:14px">
+          <span class="chip on" data-val="mahou">✶ 魔法少女</span>
+          <span class="chip" data-val="demon">⛧ 魔人·魔物</span>
+          <span class="chip" data-val="mortal">❀ 凡人</span>
+        </div>
+        <div class="grid">
+          <div class="f"><label>姓名<span class="star">✦</span></label><input type="text" id="np_name" placeholder="例：凌月 / 缢血者·诺克斯"></div>
+          <div class="f"><label>性别 / 年龄</label><input type="text" id="np_sexage" placeholder="如 女/19"></div>
+        </div>
+        <div class="f full" style="margin-top:13px"><label>与主角关系</label>
+          <div class="chips npfill" data-fill="np_rel" style="margin-bottom:8px">
+            <span class="chip">队友</span><span class="chip">对手</span><span class="chip">同学 / 同门</span><span class="chip">师长 / 前辈</span><span class="chip">引路人</span><span class="chip">暗中接近者</span>
+          </div>
+          <input type="text" id="np_rel" placeholder="点标签或自定义">
+        </div>
+        <div class="np-mahou">
+          <div class="grid" style="margin-top:13px">
+            <div class="f"><label>阵营</label><input type="text" id="np_camp_m" placeholder="官方异事局 / 独立 / 恶堕"></div>
+            <div class="f"><label>阶级 · 等级</label><input type="text" id="np_rank_m" placeholder="如 精英 Lv.30"></div>
+          </div>
+          <div class="grid" style="margin-top:13px">
+            <div class="f"><label>系别</label><input type="text" id="np_power_m" placeholder="如 感知系"></div>
+            <div class="f"><label>星器</label><input type="text" id="np_star_m" placeholder="如 流星发簪"></div>
+          </div>
+          <div class="f full" style="margin-top:13px"><label>恶堕阶段</label>
+            <div class="chips compact npsel" data-np="np_corr_m">
+              <span class="chip" data-val="未染">未染</span><span class="chip" data-val="初蚀">初蚀</span><span class="chip" data-val="沉沦">沉沦</span><span class="chip" data-val="半堕">半堕</span><span class="chip" data-val="恶堕">恶堕</span>
+            </div>
+          </div>
+        </div>
+        <div class="np-demon" style="display:none">
+          <div class="grid" style="margin-top:13px">
+            <div class="f"><label>类型形态</label><input type="text" id="np_type_d" placeholder="化形魔人 / 寄生体魔人 / 恶堕魔法少女 / 原生魔物"></div>
+            <div class="f"><label>位格 · 等级</label><input type="text" id="np_rank_d" placeholder="如 化渊者 Lv.32"></div>
+          </div>
+          <div class="grid" style="margin-top:13px">
+            <div class="f"><label>深渊位格</label>
+              <div class="chips compact npsel" data-np="np_threat_d">
+                <span class="chip" data-val="孳生体">孳生体</span><span class="chip" data-val="蚀魂者">蚀魂者</span><span class="chip" data-val="化渊者">化渊者</span><span class="chip" data-val="噬星者">噬星者</span><span class="chip" data-val="渊厄">渊厄</span>
+              </div>
+            </div>
+            <div class="f"><label>本源</label><input type="text" id="np_star_d" placeholder="如 胸腔魔核"></div>
+          </div>
+          <div class="f full" style="margin-top:13px"><label>灾异本能 / 原系别</label><input type="text" id="np_power_d" placeholder="如 蚀心·精神；恶堕少女写原系别"></div>
+        </div>
+        <div class="np-mortal" style="display:none">
+          <div class="f full" style="margin-top:13px"><label>身份 / 职业</label><input type="text" id="np_job_o" placeholder="如 家主 / 政客 / 店主 / 研究员"></div>
+          <div class="f full" style="margin-top:13px"><label>能力 / 特长（选填）</label><input type="text" id="np_skill_o" placeholder="如 人脉广博 / 武学高手"></div>
+        </div>
+        <div class="f full" style="margin-top:13px"><label>外貌 / 气质</label><input type="text" id="np_look" placeholder="一句话，如 清冷孤傲、银发红瞳"></div>
+        <div class="f full" style="margin-top:13px"><label>钩子 / 秘密</label><textarea id="np_hook" placeholder="TA 身上的悬念、心事或伏笔。"></textarea></div>
+        <div class="f full" style="margin-top:13px"><label>登场方式（选填）</label><input type="text" id="np_debut" placeholder="希望 TA 如何初次登场"></div>
+        <button type="button" class="roster-add" id="npAdd">✦ 加入名册</button>
+        <div class="roster-list" id="rosterList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="forge-wrap">
+    <button class="forge" id="forge"><span class="stamp">✶</span>立约 · 铸印</button>
+  </div>
+
+  <div class="out" id="out">
+    <div class="out-h">
+      <span>✦ 契约已成 —— 复制此档案，作为第一条发言发送给AI即可开场</span>
+      <button class="tb read" id="btnCopy">复制档案</button>
+    </div>
+    <pre class="out-box" id="outBox"></pre>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+ const KEY_CUR="star_pact_cur_v5", KEY_ALL="star_pact_all_v5";
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+  /* localStorage */
+  const store={
+    get(k){ try{return localStorage.getItem(k);}catch(e){return null;} },
+    set(k,v){ try{localStorage.setItem(k,v);}catch(e){} },
+  };
+ /* ---- 状态读写 ---- */
+  function getState(){
+    const st={};
+    $$("[data-k]").forEach(el=>st[el.dataset.k]=el.value);
+
+    // 身份立场（魔法少女 / 魔人）
+    st.role = ($("#roleSwitch") && $("#roleSwitch").dataset.r) || "mahou";
+
+    let m = "善良";
+ const v = $("#moral").dataset.v;
+    if(v === "fall") m = "堕落";
+    st.moral = m;
+ ["camp","rank","demon_kind","demon_tier","demon_camp"].forEach(g=>{
+      const on=$(`[data-chip="${g}"] .chip.on`); st[g]=on?on.dataset.val:"";
+    });
+
+    return st;
+ }
+
+  function setState(st){
+    st=st||{};
+    $$("[data-k]").forEach(el=>{ if(st[el.dataset.k]!==undefined) el.value=st[el.dataset.k]; });
+
+    let modeVal = "good";
+ if(st.moral === "堕落") modeVal = "fall";
+    setMoral(modeVal);
+    setRole(st.role || "mahou");
+ ["camp","rank","demon_kind","demon_tier","demon_camp"].forEach(g=>{
+      $$(`[data-chip="${g}"] .chip`).forEach(c=>c.classList.toggle("on",c.dataset.val===st[g]));
+    });
+
+    syncIdChips();
+ }
+
+  function autosave(){ store.set(KEY_CUR,JSON.stringify(getState())); }
+
+  /* ---- 三相人格切换 ---- */
+  function setMoral(v){
+    const m=$("#moral");
+ m.dataset.v=v;
+    m.querySelectorAll("button").forEach(b=>b.classList.remove("on"));
+
+    let btnVal = "善良";
+    if(v==="fall") btnVal = "堕落";
+
+    const btn = m.querySelector(`[data-val="${btnVal}"]`);
+    if(btn) btn.classList.add("on");
+    // 仅在「魔法少女」身份下，人格切换才驱动整体配色
+    if((document.documentElement.dataset.role||"mahou") !== "demon"){
+      document.documentElement.dataset.mode = v;
+    }
+  }
+
+  /* ---- 身份立场切换 (魔法少女 / 魔人) ---- */
+  function setRole(r){
+    r = (r==="demon") ? "demon" : "mahou";
+    const el=$("#roleSwitch");
+    if(el){
+      el.dataset.r=r;
+      el.querySelectorAll("button").forEach(b=>b.classList.toggle("on", b.dataset.val===r));
+    }
+    document.documentElement.dataset.role = r;
+    if(r==="demon"){
+      document.documentElement.dataset.mode = "demon";
+    } else {
+      document.documentElement.dataset.mode = ($("#moral").dataset.v) || "good";
+    }
+    // 抬头文案随身份切换
+    const HEAD = {
+      mahou:{ seal:"✶ Per Aspera ✶", title:'星盟<b>契约</b>书', latin:"The Covenant of Stars", sub:"书写你的姓名与誓约，星盘将记下命运的齿轮。" },
+      demon:{ seal:"⛧ Ad Abyssum ⛧", title:'深渊<b>魔契</b>书', latin:"The Pact of the Abyss", sub:"以魔名与执念缔结——深渊将记下你猎食的轨迹。" }
+    };
+    const h=HEAD[r];
+    const _sm=$("#sealMark"), _dt=$("#docTitle"), _dl=$("#docLatin"), _ds=$("#docSub");
+    if(_sm) _sm.textContent=h.seal;
+    if(_dt) _dt.innerHTML=h.title;
+    if(_dl) _dl.textContent=h.latin;
+    if(_ds) _ds.textContent=h.sub;
+  }
+  $("#roleSwitch").querySelectorAll("button").forEach(b=>{
+    b.addEventListener("click",()=>{ setRole(b.dataset.val); autosave(); });
+  });
+
+  $("#moral").querySelectorAll("button").forEach(b=>{
+    b.addEventListener("click",()=>{
+      let mode = "good";
+      if(b.dataset.val === "堕落") mode = "fall";
+      setMoral(mode);
+      autosave();
+    });
+  });
+ /* ---- 剧情预设快捷填入 ---- */
+  $$(".plot-chips .chip").forEach(chip=>{
+    chip.addEventListener("click",function(){
+      const targetId = this.parentElement.dataset.target;
+      const ta = $(`[data-k="${targetId}"]`);
+      ta.value = this.textContent;
+      autosave();
+    });
+  });
+ /* ---- 开局路线分页切换 ---- */
+  const routeTabs = $("#routeTabs");
+  if(routeTabs){
+    routeTabs.querySelectorAll("button").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const rt = btn.dataset.rt;
+        routeTabs.dataset.rt = rt;
+        routeTabs.querySelectorAll("button").forEach(b=>b.classList.toggle("on", b===btn));
+        $$(".route-panel").forEach(p=>p.classList.toggle("on", p.dataset.panel===rt));
+      });
+    });
+  }
+ /* ---- 自定义开局格填入 ---- */
+  $$(".chip-custom").forEach(inp=>{
+    const apply=()=>{ const ta=$(`[data-k="${inp.dataset.target}"]`); const v=inp.value.trim(); if(ta && v){ ta.value=v; autosave(); } };
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); apply(); inp.blur(); } });
+    inp.addEventListener("blur",apply);
+  });
+ /* ---- 单选标签逻辑通用处理 ---- */
+  $$("[data-chip]").forEach(grp=>{
+    const type = grp.dataset.chip;
+
+
+
+    // 普通单选标签组
+    grp.querySelectorAll(".chip").forEach(chip=>
+      chip.addEventListener("click",()=>{
+        const was=chip.classList.contains("on");
+
+        grp.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
+        if(!was) chip.classList.add("on");
+        autosave();
+      }));
+  });
+ /* ---- 同步输入框与标签高亮 ---- */
+  const idInput=$('[data-k="identity"]');
+  function syncIdChips(){ $$("#idChips .chip").forEach(c=>c.classList.toggle("on",c.textContent===idInput.value.trim()));
+ }
+  $$("#idChips .chip").forEach(c=>c.addEventListener("click",()=>{
+    idInput.value=(idInput.value.trim()===c.textContent)?"":c.textContent;
+    syncIdChips(); autosave();
+  }));
+  idInput.addEventListener("input",syncIdChips);
+
+
+ /* ---- 监听自动保存 ---- */
+  $$("[data-k]").forEach(el=>el.addEventListener("input",autosave));
+
+  /* ---- 卷宗管理 ---- */
+  function allSchemes(){ try{return JSON.parse(store.get(KEY_ALL))||{};}catch(e){return{};} }
+  function writeSchemes(o){ store.set(KEY_ALL,JSON.stringify(o));
+ }
+  function refresh(sel){
+    const o=allSchemes(), el=$("#schemeSel");
+    el.innerHTML='<option value="">— 选择已存卷宗 —</option>';
+    Object.keys(o).forEach(n=>{const op=document.createElement("option");op.value=n;op.textContent=n;el.appendChild(op);});
+    if(sel) el.value=sel;
+ }
+  $("#btnSave").addEventListener("click",()=>{
+    const name=prompt("卷宗名称：",getState().name||"未命名契约"); if(!name) return;
+    const o=allSchemes(); o[name]=getState(); writeSchemes(o); refresh(name); toast(`已保存卷宗「${name}」`);
+  });
+ $("#btnLoad").addEventListener("click",()=>{
+    const n=$("#schemeSel").value; if(!n) return toast("请先选择卷宗");
+    setState(allSchemes()[n]); autosave(); toast(`已读取「${n}」`);
+  });
+ $("#btnDel").addEventListener("click",()=>{
+    const n=$("#schemeSel").value; if(!n) return toast("请先选择卷宗");
+    if(!confirm(`确定删除「${n}」？`)) return;
+    const o=allSchemes(); delete o[n]; writeSchemes(o); refresh(); toast("已删除");
+  });
+ $("#btnExport").addEventListener("click",()=>{
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(new Blob([JSON.stringify(getState(),null,2)],{type:"application/json"}));
+    a.download=(getState().name||"星盟契约")+".json"; a.click(); toast("已导出备份");
+  });
+  $("#btnImport").addEventListener("click",()=>$("#fileImport").click());
+ $("#fileImport").addEventListener("change",e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>{ try{ setState(JSON.parse(r.result)); autosave(); toast("已导入"); }catch(err){ toast("文件格式有误"); } };
+    r.readAsText(f); e.target.value="";
+  });
+ /* ---- 成长体系：阶级→随机等级→该级经验上限→随机经验（数值确定，永不超上限） ---- */
+  function expCap(lv){
+    if(lv<=10) return 20 + (lv-1)*5;     // 见习 Lv1-10
+    if(lv<=25) return 80 + (lv-11)*15;   // 正式 Lv11-25
+    if(lv<=40) return 250 + (lv-26)*40;  // 精英 Lv26-40
+    if(lv<=55) return 700 + (lv-41)*100; // 战姬 Lv41-55
+    return 1800 + (lv-56)*300;           // 传奇 Lv56-70
+  }
+  function rollGrowth(rankText){
+    const R={"见习魔法少女":[1,10],"正式魔法少女":[11,25],"精英魔法少女":[26,40],"战姬":[41,55],"传奇":[56,70]};
+    const rg=R[rankText]; if(!rg) return null;
+    const lv=rg[0]+Math.floor(Math.random()*(rg[1]-rg[0]+1)); // 区间内随机等级
+    const cap=expCap(lv);
+    const cur=1+Math.floor(Math.random()*(cap-1));            // 1~上限-1 随机经验
+    return {阶级:rankText, 等级:lv, 经验上限:cap, 当前经验:cur};
+  }
+ /* ---- 编译输出档案 ---- */
+  function buildDemon(s){
+    const L=[];
+    const add=(p,k,v)=>{ if(v&&String(v).trim()) L.push(" ".repeat(p)+k+": "+String(v).trim()); };
+    const blk=(p,t,has)=>{ if(has) L.push(" ".repeat(p)+t+":"); };
+
+    L.push("<{{user}}档案>");
+    L.push("魔契 · 深渊烙印:");
+
+    L.push("  核心本源:");
+    add(4,"魔名",s.demon_name);
+    add(4,"性别",s.demon_gender);
+    add(4,"称号",s.demon_title);
+    add(4,"特质标签",s.demon_trait);
+    add(4,"类型形态",s.demon_kind);
+    add(4,"来历起源",s.demon_origin);
+    add(4,"弱点克星",s.demon_weakness);
+
+    const _isFallen = (s.demon_kind==="恶堕魔法少女");
+    blk(2,"位格评定", s.demon_tier || s.demon_threat || _isFallen);
+    add(4,"深渊位格",s.demon_tier);
+    add(4,"人类威胁标定(参考)",s.demon_threat);
+    if(_isFallen) add(4,"恶堕阶段","恶堕（曾是守护者，保留原阶级与系别，已彻底沦为深渊一方）");
+
+    blk(2,"凡间伪装",s.demon_identity||s.demon_age||s.demon_camp);
+    add(4,"伪装身份",s.demon_identity);
+    add(4,"表观年龄/魔龄",s.demon_age);
+    add(4,"所属阵营",s.demon_camp);
+
+    blk(2,"能力叙述",s.demon_power||s.demon_core||s.demon_power_desc||s.demon_corrupt);
+    add(4,"天生异能/原系别",s.demon_power);
+    add(4,"力量本源/魔核",s.demon_core);
+    add(4,"能力详解",s.demon_power_desc);
+    add(4,"侵蚀腐化手段",s.demon_corrupt);
+
+    blk(2,"狩猎之道",s.demon_hunt||s.demon_plot);
+    add(4,"狩猎偏好",s.demon_hunt);
+    add(4,"开局剧情",s.demon_plot);
+
+    blk(2,"自定义描述",s.look);
+    add(4,"补充描述",s.look);
+
+    L.push("</{{user}}档案>");
+    return L.join("\n");
+  }
+
+  function build(){
+    const s=getState();
+    if(s.role==="demon") return buildDemon(s);
+    const L=[];
+    const add=(p,k,v)=>{ if(v&&String(v).trim()) L.push(" ".repeat(p)+k+": "+String(v).trim());
+ };
+    const blk=(p,t,has)=>{ if(has) L.push(" ".repeat(p)+t+":"); };
+
+    L.push("<{{user}}档案>");
+    L.push("星盟契约:");
+
+    L.push("  核心人格:");
+    add(4,"姓名",s.name);
+    add(4,"称号",s.title);
+    add(4,"人格状态",s.moral);
+    add(4,"特质标签",s.trait);
+    if(s.route){ L.push("  开场剧情:"); add(4,"开场情景/路线",s.route); }
+ // 动态输出弱点
+    if(s.moral === "善良" && s.weakness) {
+      add(4,"弱点软肋",s.weakness);
+ } else if(s.moral === "堕落" && s.fetish) {
+      add(4,"固有弱点",s.fetish);
+ }
+
+    blk(2,"凡间身份",s.identity||s.age);
+    add(4,"日常身份",s.identity);
+ add(4,"年龄",s.age);
+
+    blk(2,"阶级属性",s.camp||s.rank);
+    add(4,"所属阵营",s.camp); add(4,"当前等级",s.rank);
+    if(s.rank){ const g=rollGrowth(s.rank); if(g) add(4,"初始数值(系统已随机生成·请原样写入变量)", "阶级="+g.阶级+" | 等级="+g.等级+" | 当前经验="+g.当前经验+" | 经验上限="+g.经验上限); }
+
+    blk(2,"星灵与魔法",s.power||s.power_desc||s.astral_type);
+    add(4,"能力系别",s.power); add(4,"星灵载体",s.astral_type);
+    add(4,"星灵性格",s.astral_per); add(4,"羁绊关系",s.astral_relation);
+    add(4,"魔法详解",s.power_desc);
+
+    blk(2,"自定义描述",s.look); add(4,"补充描述",s.look);
+
+    L.push("</{{user}}档案>");
+    return L.join("\n");
+ }
+
+  $("#forge").addEventListener("click",()=>{
+    const s=getState();
+    if(s.role==="demon"){
+      if(!s.demon_name) return toast("请至少填写魔名");
+    } else {
+      if(!s.name) return toast("请至少填写姓名");
+    }
+    $("#outBox").textContent=build()+buildRoster();
+    $("#out").classList.add("show");
+    $("#out").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+ $("#btnCopy").addEventListener("click",()=>{
+    const txt=$("#outBox").textContent;
+    if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(()=>toast("已复制到剪贴板"),()=>fallbackCopy(txt)); }
+    else fallbackCopy(txt);
+  });
+ function fallbackCopy(t){
+    const ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand("copy");toast("已复制");}catch(e){toast("请手动复制");} ta.remove();
+  }
+
+  let tmr; function toast(m){ const t=$("#toast");
+ t.textContent=m; t.classList.add("show");
+    clearTimeout(tmr); tmr=setTimeout(()=>t.classList.remove("show"),1900); }
+
+  /* ---- 初始化运行 ---- */
+  refresh();
+  let _loaded=false;
+  try{ const d=JSON.parse(store.get(KEY_CUR)); if(d){ setState(d); _loaded=true; } }catch(e){}
+  if(!_loaded){ setRole("mahou"); }
+  syncIdChips();
+
+  /* ============ 开局人物名册（整合自人物铸造台·完全隔离） ============ */
+  var npRoster = [], npEditIdx = -1, npcKind = "mahou";
+  function buildRoster(){
+    if(!npRoster.length) return "";
+    var KL = {mahou:"魔法少女", demon:"魔人·魔物", mortal:"凡人"};
+    var L = ["<开局人物名册>", "（玩家预设的登场人物。开场第一幕请优先安排登场、并登记入【重要人物】表持续追踪；生命/魔力等依其等级与战力标尺生成，信息不足处按世界观补全，勿擅改下列设定。）", ""];
+    npRoster.forEach(function(p, i){
+      var add = function(k, v){ if(v && String(v).trim()) L.push("  " + k + "：" + String(v).trim()); };
+      L.push("【人物" + (i+1) + "·" + (p.name||"无名") + "】");
+      add("类型", KL[p.kind]);
+      add("性别·年龄", p.sexage);
+      if(p.kind === "mahou"){ add("阵营", p.camp); add("阶级·等级", p.rank); add("系别", p.power); add("星器", p.star); add("恶堕阶段", p.corr); }
+      else if(p.kind === "demon"){ add("类型形态", p.type); add("位格·等级", p.rank); add("深渊位格", p.threat); add("灾异本能/原系别", p.power); add("本源", p.star); }
+      else { add("身份职业", p.job); add("能力特长", p.skill); }
+      add("与主角关系", p.rel);
+      add("外貌气质", p.look); add("钩子/秘密", p.hook); add("登场方式", p.debut);
+      L.push("");
+    });
+    L.push("</开局人物名册>");
+    return "\n\n" + L.join("\n");
+  }
+  (function(){
+    var KEY_R = (typeof KEY_CUR !== "undefined" ? KEY_CUR : "star_pact") + "_roster";
+    var tg = $("#rosterToggle"), body = $("#rosterBody");
+    if(tg && body) tg.addEventListener("click", function(){ var op = body.style.display !== "none"; body.style.display = op ? "none" : ""; tg.textContent = op ? "＋ 展开捏人（选填）" : "－ 收起名册"; });
+    function setK(k){ npcKind = k; $$("#npcKind .chip").forEach(function(c){ c.classList.toggle("on", c.dataset.val === k); }); [".np-mahou",".np-demon",".np-mortal"].forEach(function(s){ var e = $(s); if(e) e.style.display = "none"; }); var sh = $(".np-" + k); if(sh) sh.style.display = ""; }
+    $$("#npcKind .chip").forEach(function(c){ c.addEventListener("click", function(){ setK(c.dataset.val); }); });
+    $$(".npfill .chip").forEach(function(c){ c.addEventListener("click", function(){ var t = $("#" + c.parentElement.dataset.fill); if(t) t.value = c.textContent.trim(); }); });
+    $$(".npsel").forEach(function(box){ box.querySelectorAll(".chip").forEach(function(c){ c.addEventListener("click", function(){ var was = c.classList.contains("on"); box.querySelectorAll(".chip").forEach(function(x){ x.classList.remove("on"); }); if(!was) c.classList.add("on"); }); }); });
+    function selVal(np){ var on = $('.npsel[data-np="' + np + '"] .chip.on'); return on ? (on.dataset.val || on.textContent.trim()) : ""; }
+    function setSel(np, v){ $$('.npsel[data-np="' + np + '"] .chip').forEach(function(c){ c.classList.toggle("on", (c.dataset.val || c.textContent.trim()) === v); }); }
+    function val(id){ var e = $("#" + id); return e ? e.value.trim() : ""; }
+    function setVal(id, v){ var e = $("#" + id); if(e) e.value = v || ""; }
+    function readForm(){
+      var p = {kind:npcKind, name:val("np_name"), sexage:val("np_sexage"), rel:val("np_rel"), look:val("np_look"), hook:val("np_hook"), debut:val("np_debut")};
+      if(npcKind === "mahou"){ p.camp=val("np_camp_m"); p.rank=val("np_rank_m"); p.power=val("np_power_m"); p.star=val("np_star_m"); p.corr=selVal("np_corr_m"); }
+      else if(npcKind === "demon"){ p.type=val("np_type_d"); p.rank=val("np_rank_d"); p.threat=selVal("np_threat_d"); p.power=val("np_power_d"); p.star=val("np_star_d"); }
+      else { p.job=val("np_job_o"); p.skill=val("np_skill_o"); }
+      return p;
+    }
+    function fillForm(p){
+      setK(p.kind || "mahou");
+      setVal("np_name",p.name); setVal("np_sexage",p.sexage); setVal("np_rel",p.rel); setVal("np_look",p.look); setVal("np_hook",p.hook); setVal("np_debut",p.debut);
+      setVal("np_camp_m",p.camp); setVal("np_rank_m", p.kind==="mahou"?p.rank:""); setVal("np_power_m", p.kind==="mahou"?p.power:""); setVal("np_star_m", p.kind==="mahou"?p.star:""); setSel("np_corr_m",p.corr);
+      setVal("np_type_d",p.type); setVal("np_rank_d", p.kind==="demon"?p.rank:""); setVal("np_power_d", p.kind==="demon"?p.power:""); setVal("np_star_d", p.kind==="demon"?p.star:""); setSel("np_threat_d",p.threat);
+      setVal("np_job_o",p.job); setVal("np_skill_o",p.skill);
+    }
+    function clearForm(){ npEditIdx=-1; ["np_name","np_sexage","np_rel","np_look","np_hook","np_debut","np_camp_m","np_rank_m","np_power_m","np_star_m","np_type_d","np_rank_d","np_power_d","np_star_d","np_job_o","np_skill_o"].forEach(function(id){ setVal(id,""); }); $$(".npsel .chip").forEach(function(c){ c.classList.remove("on"); }); var a=$("#npAdd"); if(a) a.textContent="✦ 加入名册"; }
+    function esc2(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+    function render(){
+      var box = $("#rosterList"); if(!box) return;
+      if(!npRoster.length){ box.innerHTML = '<div class="rl-empty">名册为空——填好上方，点「加入名册」。可加多个。</div>'; saveR(); return; }
+      var KL = {mahou:"魔法少女", demon:"魔人", mortal:"凡人"};
+      box.innerHTML = npRoster.map(function(p, i){
+        var sub = [];
+        if(p.kind==="mahou"){ sub.push(p.camp, p.rank, p.power); }
+        else if(p.kind==="demon"){ sub.push(p.type, p.rank, p.threat?("位格"+p.threat):""); }
+        else { sub.push(p.job); }
+        if(p.rel) sub.push("关系:" + p.rel);
+        return '<div class="rcard k-' + p.kind + '"><div class="rc-m"><span class="rc-n">' + esc2(p.name||"无名") + '</span><span class="rc-t">' + KL[p.kind] + '</span><div class="rc-s">' + esc2(sub.filter(Boolean).join(" · ")||"—") + '</div></div><div class="rc-a"><button type="button" data-e="' + i + '">改</button><button type="button" data-x="' + i + '">删</button></div></div>';
+      }).join("");
+      box.querySelectorAll("[data-e]").forEach(function(b){ b.addEventListener("click", function(){ npEditIdx = parseInt(b.dataset.e,10); fillForm(npRoster[npEditIdx]); var a=$("#npAdd"); if(a) a.textContent="✦ 保存修改"; if(body) body.style.display=""; if(tg) tg.textContent="－ 收起名册"; var rs=$("#rosterSec"); if(rs) rs.scrollIntoView({behavior:"smooth"}); }); });
+      box.querySelectorAll("[data-x]").forEach(function(b){ b.addEventListener("click", function(){ var i=parseInt(b.dataset.x,10); npRoster.splice(i,1); if(npEditIdx===i) clearForm(); else if(npEditIdx>i) npEditIdx--; render(); }); });
+      saveR();
+    }
+    function saveR(){ try{ store.set(KEY_R, JSON.stringify(npRoster)); }catch(e){} }
+    function loadR(){ try{ var d = JSON.parse(store.get(KEY_R)); if(d && d.length) npRoster = d; }catch(e){} }
+    var addBtn = $("#npAdd");
+    if(addBtn) addBtn.addEventListener("click", function(){
+      var p = readForm(); if(!p.name){ toast("先给 TA 起个名字"); return; }
+      if(npEditIdx >= 0){ npRoster[npEditIdx] = p; npEditIdx = -1; toast("已保存修改"); } else { npRoster.push(p); toast("已加入名册"); }
+      render(); clearForm();
+    });
+    loadR(); setK("mahou"); render();
+    $$(".sec.fold > .sec-h").forEach(function(hh){ hh.addEventListener("click", function(){ hh.parentElement.classList.toggle("open"); }); });
+  })();
+})();
+</script>
+</body>
+</html>
+```
