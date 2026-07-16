@@ -852,6 +852,19 @@
         仅格式显示: true
         仅格式提示词: false
 
+    - 正则名称: "[界面]前端界面状态栏"
+      id: status-bar-frontend-regex
+      启用: true
+      查找表达式: <StatusPlaceHolderImpl/>
+      内容: |-
+        <div id="status-bar-mount"><div id="app"></div></div>
+      来源:
+        用户输入: false
+        AI输出: true
+      作用于:
+        仅格式显示: true
+        仅格式提示词: false
+
     - 正则名称: 状态栏开场白
       id: status-bar-opener
       启用: true
@@ -881,10 +894,23 @@
         类型: 脚本
         内容: |-
           import { registerMvuSchema } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/mvu_zod.js';
-          import { Schema } from 'https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@6c09c7c/dist/1.魔物娘堡垒2.0/schema.js';
+          import { Schema } from 'https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@1795118/dist/1.魔物娘堡垒2.0/schema.js';
 
           $(() => {
             registerMvuSchema(Schema);
+          });
+
+      - 名称: 状态栏前端界面
+        id: status-bar-frontend
+        启用: true
+        类型: 脚本
+        内容: |-
+          import { waitGlobalInitialized } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/stl.js';
+
+          $(() => {
+            waitGlobalInitialized('Mvu').then(() => {
+              import('https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@1795118/dist/1.魔物娘堡垒2.0/界面/状态栏/index.html');
+            });
           });
 
     变量: {}

@@ -23,7 +23,7 @@
       </div>
 
       <!-- 过渡容器 -->
-      <Transition name="step-fade" mode="out-in">
+      <div class="step-panel-wrapper">
         <!-- ════ 第1步：性别 ════ -->
         <div v-if="step === 0" key="step0" class="step-panel">
           <h2 class="step-title">选择你的性别</h2>
@@ -118,7 +118,6 @@
       </Transition>
 
       <!-- 底部装饰 -->
-      <div class="ornament-row" style="margin-top:8px">
         <span class="orn-sym">⬥</span>
         <span class="orn-line"></span>
         <span class="orn-sym">⬥</span>
