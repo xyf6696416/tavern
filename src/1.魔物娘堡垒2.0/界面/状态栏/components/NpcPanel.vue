@@ -45,6 +45,7 @@
             <div class="fill" :style="{ width: store.data.当前互动对象.好感度 + '%', background: favorBarColor }"></div>
             <span class="label">{{ store.data.当前互动对象.好感度 }}/100</span>
           </div>
+          <span class="stage-tag" :class="favorNpcStageClass">{{ store.data.当前互动对象.$好感阶段 }}</span>
         </div>
         <div class="int-details">
           <div><span class="int-label">临时状态</span> {{ store.data.当前互动对象.临时状态 || '无' }}</div>
@@ -102,6 +103,13 @@ function favorColor(v: number) {
   if (v < 60) return '#eab308';
   return 'var(--c-hp-green)';
 }
+
+const favorNpcStageClass = computed(() => {
+  const s = store.data.当前互动对象.$好感阶段;
+  if (s === '陌生') return 'stage-mild';
+  if (s === '认识' || s === '友好') return 'stage-moderate';
+  return 'stage-good';
+});
 
 function setAsInteract(name: string) {
   store.data.当前互动对象.姓名 = name;
@@ -225,4 +233,28 @@ function clearInteract() {
 .rel-role { color: var(--c-border-bright); font-size: 11px; min-width: 40px; }
 .rel-bar { flex: 1; height: 10px; max-width: 120px; }
 .rel-desc { color: var(--c-text-secondary); font-size: 11px; flex: 1; }
+
+/* 阶段标签 */
+.stage-tag {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.stage-mild {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid #22c55e;
+}
+.stage-moderate {
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+  border: 1px solid #eab308;
+}
+.stage-good {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid #22c55e;
+}
 </style>

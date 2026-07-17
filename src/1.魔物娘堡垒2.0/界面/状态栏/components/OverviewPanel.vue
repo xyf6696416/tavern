@@ -9,7 +9,7 @@
     <!-- 侵蚀度 -->
     <div class="panel-title" style="margin-top:0">
       <span>💀 诺亚之城侵蚀度</span>
-      <span class="badge">{{ store.data.世界.侵蚀阶段 }}</span>
+      <span class="badge stage-badge" :class="erosionStageClass">{{ store.data.世界.$侵蚀阶段 || store.data.世界.侵蚀阶段 }}</span>
     </div>
     <div class="corruption-bar">
       <div class="progress-bar">
@@ -74,6 +74,7 @@
     <!-- 堕落进度 -->
     <div class="panel-title" style="margin-top:8px">
       <span>💀 堕落进度</span>
+      <span class="badge stage-badge" :class="corruptionStageClass">{{ store.data.主角.$恶堕阶段 }}</span>
     </div>
     <div class="stats-grid">
       <div class="stat-row">
@@ -90,7 +91,8 @@
       </div>
       <div class="stat-row">
         <span class="stat-label">🌸 雌堕值</span>
-        <div class="progress-bar">
+        <span class="stat-value stage-tag" :class="femStageClass">{{ store.data.主角.$雌堕阶段 }}</span>
+        <div class="progress-bar" style="flex:1">
           <div class="fill" :style="{ width: store.data.主角.雌堕值 + '%', background: femColor }"></div>
           <span class="label">{{ store.data.主角.雌堕值 }}/100</span>
         </div>
@@ -172,7 +174,7 @@
         </div>
       </div>
       <div class="npc-details">
-        <div><span class="info-label">好感度:</span> {{ store.data.当前互动对象.好感度 }}/100</div>
+        <div><span class="info-label">好感度:</span> {{ store.data.当前互动对象.好感度 }}/100 <span class="stage-tag" :class="favorStageClass">{{ store.data.当前互动对象.$好感阶段 }}</span></div>
         <div><span class="info-label">恶堕:</span> {{ store.data.当前互动对象.恶堕程度 || '未记录' }}</div>
         <div><span class="info-label">想法:</span> {{ store.data.当前互动对象.想法 }}</div>
       </div>
@@ -279,6 +281,33 @@ function adjNpcFavor(delta: number) {
   const newVal = store.data.当前互动对象.好感度 + delta;
   store.data.当前互动对象.好感度 = Math.max(0, Math.min(100, newVal));
 }
+
+// ── 阶段样式 ──
+const erosionStageClass = computed(() => {
+  const s = store.data.世界.$侵蚀阶段;
+  if (s === '轻度腐化') return 'stage-mild';
+  if (s === '中度腐化') return 'stage-moderate';
+  if (s === '重度腐化') return 'stage-severe';
+  return 'stage-critical';
+});
+const corruptionStageClass = computed(() => {
+  const s = store.data.主角.$恶堕阶段;
+  if (s === '纯洁期' || s === '潜伏期') return 'stage-mild';
+  if (s === '觉醒期' || s === '显性期') return 'stage-moderate';
+  return 'stage-critical';
+});
+const femStageClass = computed(() => {
+  const s = store.data.主角.$雌堕阶段;
+  if (s === '无感期' || s === '萌芽期') return 'stage-mild';
+  if (s === '发育期' || s === '接受期') return 'stage-moderate';
+  return 'stage-critical';
+});
+const favorStageClass = computed(() => {
+  const s = store.data.当前互动对象.$好感阶段;
+  if (s === '陌生') return 'stage-mild';
+  if (s === '认识' || s === '友好') return 'stage-moderate';
+  return 'stage-good';
+});
 </script>
 
 <style lang="scss" scoped>
@@ -450,5 +479,45 @@ function adjNpcFavor(delta: number) {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+
+/* ── 阶段标签样式 ── */
+.stage-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-weight: bold;
+}
+.stage-mild {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid #22c55e;
+}
+.stage-moderate {
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+  border: 1px solid #eab308;
+}
+.stage-severe {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid #a855f7;
+}
+.stage-critical {
+  background: rgba(220, 38, 38, 0.2);
+  color: #f87171;
+  border: 1px solid #dc2626;
+}
+.stage-good {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid #22c55e;
+}
+.stage-tag {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-weight: bold;
+  white-space: nowrap;
 }
 </style>

@@ -5,13 +5,22 @@ export const Schema = z.object({
     当前地点: z.string().prefault("诺亚之心广场"),
     侵蚀度: z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(15),
     侵蚀阶段: z.string().prefault("轻度腐化"),
+    $侵蚀阶段: z.string().optional(),
     当前任务: z.array(z.object({
       标题: z.string(),
       目标: z.string(),
     })).prefault([]),
     主要线索: z.string().prefault(""),
     不为人知的事件: z.string().prefault(""),
-  }).prefault({ 当前时间: "圣历9年 5月4日 8时00分", 当前地点: "诺亚之心广场", 侵蚀度: 15, 侵蚀阶段: "轻度腐化", 当前任务: [], 主要线索: "", 不为人知的事件: "" }),
+  }).prefault({ 当前时间: "圣历9年 5月4日 8时00分", 当前地点: "诺亚之心广场", 侵蚀度: 15, 侵蚀阶段: "轻度腐化", 当前任务: [], 主要线索: "", 不为人知的事件: "" })
+   .transform(data => {
+      const $侵蚀阶段 =
+        data.侵蚀度 < 25 ? '轻度腐化'
+        : data.侵蚀度 < 50 ? '中度腐化'
+        : data.侵蚀度 < 75 ? '重度腐化'
+        : '彻底腐化';
+      return { ...data, $侵蚀阶段 };
+    }),
 
   // ── 主角状态（user_status） ──
   主角: z.object({
@@ -39,12 +48,30 @@ export const Schema = z.object({
     恶堕程度: z.string().prefault(""),
     恶堕值: z.coerce.number().transform(v => _.clamp(Math.round(v), 0, 100)).prefault(0),
     雌堕值: z.coerce.number().transform(v => _.clamp(Math.round(v), 0, 100)).prefault(0),
+    $恶堕阶段: z.string().optional(),
+    $雌堕阶段: z.string().optional(),
     user恶堕倾向形态: z.string().prefault(""),
     持有道具: z.string().prefault(""),
-    // 性癖展现
     外貌描写: z.string().prefault(""),
     变化: z.string().prefault(""),
-  }).prefault({ 等级: 1, 生命值: 100, 最大生命值: 100, 战斗力: 10, 金钱: 500 }),
+  }).prefault({ 等级: 1, 生命值: 100, 最大生命值: 100, 战斗力: 10, 金钱: 500 })
+   .transform(data => {
+    const $恶堕阶段 =
+      data.恶堕值 < 10 ? '纯洁期'
+      : data.恶堕值 < 30 ? '潜伏期'
+      : data.恶堕值 < 50 ? '觉醒期'
+      : data.恶堕值 < 70 ? '显性期'
+      : data.恶堕值 < 90 ? '沉沦期'
+      : '完全堕落';
+    const $雌堕阶段 =
+      data.雌堕值 < 10 ? '无感期'
+      : data.雌堕值 < 30 ? '萌芽期'
+      : data.雌堕值 < 50 ? '发育期'
+      : data.雌堕值 < 70 ? '接受期'
+      : data.雌堕值 < 90 ? '沉溺期'
+      : '完全雌堕';
+    return { ...data, $恶堕阶段, $雌堕阶段 };
+  }),
 
   // ── 当前互动对象（normal_status，当前交互的NPC） ──
   当前互动对象: z.object({
@@ -59,13 +86,23 @@ export const Schema = z.object({
     临时状态: z.string().prefault(""),
     永久状态: z.string().prefault(""),
     好感度: z.coerce.number().transform(v => _.clamp(Math.round(v), 0, 100)).prefault(0),
+    $好感阶段: z.string().optional(),
     雌堕程度: z.string().prefault(""),
     恶堕程度: z.string().prefault(""),
     恶堕倾向形态: z.string().prefault(""),
     飞升: z.string().prefault("无"),
     想法: z.string().prefault(""),
     外貌描写: z.string().prefault(""),
-  }).prefault({ 等级: 1, 生命值: 100, 最大生命值: 100, 战斗力: 10 }),
+  }).prefault({ 等级: 1, 生命值: 100, 最大生命值: 100, 战斗力: 10 })
+   .transform(data => {
+    const $好感阶段 =
+      data.好感度 < 20 ? '陌生'
+      : data.好感度 < 40 ? '认识'
+      : data.好感度 < 60 ? '友好'
+      : data.好感度 < 80 ? '亲密'
+      : '依存';
+    return { ...data, $好感阶段 };
+  }),
 
   // ── 附近重要人物（world_status中的列表，支持多人） ──
   附近重要人物: z.array(z.object({

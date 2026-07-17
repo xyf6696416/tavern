@@ -9,7 +9,21 @@
 
 角色描述: ""
 
-锚点: {}
+锚点:
+  - &立即事件
+    启用: true
+    插入位置:
+      类型: 指定深度
+      角色: 系统
+      深度: 0
+      顺序: 14720
+    激活概率: 100
+    特殊效果:
+      黏性: 5
+      冷却: 9999
+    递归:
+      不可被其他条目激活: true
+      不可激活其他条目: true
 
 世界书名称: 魔物堡垒1.0
 条目:
@@ -598,6 +612,95 @@
       不可激活其他条目: true
     文件: 世界书\规则（慢堕）
 
+  - 文件夹: 立即事件
+    条目:
+      - 名称: ===立即事件开始===
+        启用: true
+        激活策略:
+          类型: 蓝灯
+        插入位置:
+          类型: 角色定义之前
+          顺序: 14720
+        激活概率: 100
+        内容: ''
+        递归:
+          不可被其他条目激活: true
+          不可激活其他条目: true
+
+      - 名称: 最后的圣洁
+        <<: &立即事件
+          启用: true
+          插入位置:
+            类型: 指定深度
+            角色: 系统
+            深度: 0
+            顺序: 14720
+          激活概率: 100
+          特殊效果:
+            黏性: 5
+            冷却: 9999
+          递归:
+            不可被其他条目激活: true
+            不可激活其他条目: true
+        激活策略:
+          类型: 绿灯
+          关键字:
+            - 【【最后的圣洁】】
+        文件: 世界书\立即事件\最后的圣洁
+
+      - 名称: 深渊回响
+        <<: *立即事件
+        激活策略:
+          类型: 绿灯
+          关键字:
+            - 【【深渊回响】】
+        文件: 世界书\立即事件\深渊回响
+
+      - 名称: 黎明破晓
+        <<: *立即事件
+        激活策略:
+          类型: 绿灯
+          关键字:
+            - 【【黎明破晓】】
+        文件: 世界书\立即事件\黎明破晓
+
+      - 名称: 永夜降临
+        <<: *立即事件
+        激活策略:
+          类型: 绿灯
+          关键字:
+            - 【【永夜降临】】
+        文件: 世界书\立即事件\永夜降临
+
+      - 名称: 完全转化
+        <<: *立即事件
+        激活策略:
+          类型: 绿灯
+          关键字:
+            - 【【完全转化】】
+        文件: 世界书\立即事件\完全转化
+
+      - 名称: 濒死体验
+        <<: *立即事件
+        激活策略:
+          类型: 绿灯
+          关键字:
+            - 【【濒死体验】】
+        文件: 世界书\立即事件\濒死体验
+
+      - 名称: ===立即事件结束===
+        启用: true
+        激活策略:
+          类型: 蓝灯
+        插入位置:
+          类型: 角色定义之前
+          顺序: 14720
+        激活概率: 100
+        内容: ''
+        递归:
+          不可被其他条目激活: true
+          不可激活其他条目: true
+
   - 名称: 虫
     启用: true
     激活策略:
@@ -893,25 +996,23 @@
         启用: true
         类型: 脚本
         内容: |-
-          import { registerMvuSchema } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/mvu_zod.js';
-          import { Schema } from 'https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@1795118/dist/1.魔物娘堡垒2.0/schema.js';
-
-          $(() => {
-            registerMvuSchema(Schema);
-          });
+          import 'https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@1887b89/dist/1.魔物娘堡垒2.0/脚本/变量结构/index.js';
 
       - 名称: 状态栏前端界面
         id: status-bar-frontend
         启用: true
         类型: 脚本
         内容: |-
-          import { waitGlobalInitialized } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/stl.js';
-
           $(() => {
-            waitGlobalInitialized('Mvu').then(() => {
-              import('https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@1795118/dist/1.魔物娘堡垒2.0/界面/状态栏/index.html');
-            });
+            import('https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@1887b89/dist/1.魔物娘堡垒2.0/界面/状态栏/index.html');
           });
+
+      - 名称: 立即事件
+        id: immediate-events
+        启用: true
+        类型: 脚本
+        内容: |-
+          import 'https://testingcf.jsdelivr.net/gh/xyf6696416/tavern@1887b89/dist/1.魔物娘堡垒2.0/脚本/立即事件/index.js';
 
     变量: {}
  

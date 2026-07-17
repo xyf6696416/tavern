@@ -30,6 +30,9 @@
           "default": "轻度腐化",
           "type": "string"
         },
+        "$侵蚀阶段": {
+          "type": "string"
+        },
         "当前任务": {
           "default": [],
           "type": "array",
@@ -168,6 +171,12 @@
           "default": 0,
           "type": "number"
         },
+        "$恶堕阶段": {
+          "type": "string"
+        },
+        "$雌堕阶段": {
+          "type": "string"
+        },
         "user恶堕倾向形态": {
           "default": "",
           "type": "string"
@@ -238,6 +247,9 @@
         "好感度": {
           "default": 0,
           "type": "number"
+        },
+        "$好感阶段": {
+          "type": "string"
         },
         "雌堕程度": {
           "default": "",

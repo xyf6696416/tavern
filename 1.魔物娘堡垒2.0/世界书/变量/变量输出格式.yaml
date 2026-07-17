@@ -8,7 +8,7 @@
       - insert: insert new items into an object or array (using `-` as array index intends appending to the end)
       - remove
       - move
-    - don't update field names starts with `_` as they are readonly, such as `_变量`
+    - don't update field names starts with `_` or `$` as they are readonly, such as `_变量`, `$侵蚀阶段`, `$恶堕阶段`
   format: |-
     <UpdateVariable>
     <Analysis>$(IN ENGLISH, no more than 80 words)

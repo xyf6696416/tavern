@@ -14,7 +14,7 @@
       <span class="corruption-label">侵蚀度</span>
       <div class="progress-bar corruption-bar">
         <div class="fill" :style="{ width: store.data.世界.侵蚀度 + '%', background: erosionGradient }"></div>
-        <span class="label">{{ store.data.世界.侵蚀度 }}% — {{ store.data.世界.侵蚀阶段 }}</span>
+        <span class="label">{{ store.data.世界.侵蚀度 }}% — {{ store.data.世界.$侵蚀阶段 || store.data.世界.侵蚀阶段 }}</span>
       </div>
     </div>
 
