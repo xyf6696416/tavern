@@ -2,5 +2,8 @@ allowBuilds:
   '@parcel/watcher': true
   unrs-resolver: true
   vue-demi: true
+<<<<<<< HEAD
 minimumReleaseAge: 0
 onlyBuiltDependencies: ''
+=======
+>>>>>>> 6a834e584103185c14d68e73a012be1010d971d4
